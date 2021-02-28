@@ -71,658 +71,745 @@
    68 |  1  k.s     68 | Comment     | 11 |         |    0 | 00/8000               | * * * * * * * * *
    69 |  1  k.s     69 | Comment     | 11 |         |    0 | 00/8000               | *
    70 |  1  k.s     70 | Directive   | 11 |         |    0 | 00/8000               |                DO      0              
-   71 |  1  k.s    176 | Directive   | 11 |         |    0 | 00/8000               |                FIN                    
-   72 |  1  k.s    177 | Comment     | 11 |         |    0 | 00/8000               | *
-   73 |  1  k.s    178 | Comment     | 11 |         |    0 | 00/8000               | * * * * * * * * * *
-   74 |  1  k.s    179 | Comment     | 11 |         |    0 | 00/8000               | *    PROGRAMME    *
-   75 |  1  k.s    180 | Comment     | 11 |         |    0 | 00/8000               | * * * * * * * * * *
-   76 |  1  k.s    181 | Comment     | 11 |         |    0 | 00/8000               | *
-   77 |  1  k.s    182 | Directive   | 11 |         |    0 | 00/8000               |                ORG     $4000          
-   78 |  1  k.s    183 | Code        | 11 |         |    1 | 00/4000 : EA          | main           nop                    
-   79 |  1  k.s    184 | Comment     | 11 |         |    0 | 00/4001               | * init
-   80 |  1  k.s    185 | Code        | 11 |         |    3 | 00/4001 : 8D 0C C0    |                sta     {$C00C}        ; 40 col.
-   81 |  1  k.s    186 | Code        | 11 |         |    3 | 00/4004 : 20 2F FB    |                jsr     {$FB2F}        
-   82 |  1  k.s    187 | Code        | 11 |         |    3 | 00/4007 : 20 58 FC    |                jsr     {$FC58}        
-   83 |  1  k.s    188 | Macro       | 11 |         |    0 | 00/400A               |                closef  #$00           ; close all files
-   84 |  1  k.s    188 | Code        | 11 |         |    2 | 00/400A : A9 00       |                lda     #$00           
-   85 |  1  k.s    188 | Code        | 11 |         |    3 | 00/400C : 8D 66 44    |                sta     cc_parms+1     
-   86 |  1  k.s    188 | Code        | 11 |         |    3 | 00/400F : 20 00 BF    |                jsr     {$BF00}        
-   87 |  1  k.s    188 | Data        | 11 |         |    1 | 00/4012 : CC          |                dfb     {$CC}          
-   88 |  1  k.s    188 | Data        | 11 |         |    2 | 00/4013 : 65 44       |                da      cc_parms       
-   89 |  1  k.s    189 | Comment     | 11 |         |    0 | 00/4015               | *
-   90 |  1  k.s    190 | Code        | 11 |         |    3 | 00/4015 : 20 22 40    |                jsr     GetPF          
-   91 |  1  k.s    191 | Code        | 11 |         |    3 | 00/4018 : 20 27 40    |                jsr     ShowPF         
-   92 |  1  k.s    192 | Code        | 11 |         |    3 | 00/401B : 20 5C 40    |                jsr     ShowMenu       
-   93 |  1  k.s    193 | Code        | 11 |         |    3 | 00/401E : 20 69 40    |                jsr     MenuLoop       
-   94 |  1  k.s    194 | Code        | 11 |         |    1 | 00/4021 : 60          |                rts                    
-   95 |  1  k.s    195 | Empty       | 11 |         |    0 | 00/4022               |                                       
-   96 |  1  k.s    196 | Code        | 11 |         |    1 | 00/4022 : EA          | GetPF          nop                    
-   97 |  1  k.s    197 | Code        | 11 |         |    3 | 00/4023 : 20 19 41    |                jsr     DoPrefix       
-   98 |  1  k.s    198 | Code        | 11 |         |    1 | 00/4026 : 60          |                rts                    
-   99 |  1  k.s    199 | Empty       | 11 |         |    0 | 00/4027               |                                       
-  100 |  1  k.s    200 | Code        | 11 |         |    1 | 00/4027 : EA          | ShowPF         nop                    
-  101 |  1  k.s    201 | Code        | 11 |         |    2 | 00/4028 : A9 00       |                lda     #$00           
-  102 |  1  k.s    202 | Code        | 11 |         |    2 | 00/402A : 85 25       |                sta     {$25}          
-  103 |  1  k.s    203 | Code        | 11 |         |    2 | 00/402C : 85 24       |                sta     {$24}          
-  104 |  1  k.s    204 | Code        | 11 |         |    3 | 00/402E : 20 22 FC    |                jsr     {$FC22}        
-  105 |  1  k.s    205 | Code        | 11 |         |    3 | 00/4031 : 20 9C FC    |                jsr     {$FC9C}        
-  106 |  1  k.s    206 | Macro       | 11 |         |    0 | 00/4034               |                prnstr  {$5000}        
-  107 |  1  k.s    206 | Code        | 11 |         |    3 | 00/4034 : AC 00 50    |                ldy     {$5000}        
-  108 |  1  k.s    206 | Code        | 11 |         |    2 | 00/4037 : F0 0E       |                beq     ozunid_5       ; no char.
-  109 |  1  k.s    206 | Code        | 11 |         |    2 | 00/4039 : A2 00       |                ldx     #$00           
-  110 |  1  k.s    206 | Code        | 11 |         |    3 | 00/403B : BD 01 50    | ozunid_4       lda     {$5000}+1,X    
-  111 |  1  k.s    206 | Code        | 11 |         |    2 | 00/403E : 09 80       |                ora     #$80           
-  112 |  1  k.s    206 | Code        | 11 |         |    3 | 00/4040 : 20 ED FD    |                jsr     {$FDED}        
-  113 |  1  k.s    206 | Code        | 11 |         |    1 | 00/4043 : E8          |                inx                    
-  114 |  1  k.s    206 | Code        | 11 |         |    1 | 00/4044 : 88          |                dey                    
-  115 |  1  k.s    206 | Code        | 11 |         |    2 | 00/4045 : D0 F4       |                bne     ozunid_4       
-  116 |  1  k.s    206 | Empty       | 11 |         |    0 | 00/4047               | ozunid_5                              
-  117 |  1  k.s    207 | Code        | 11 |         |    3 | 00/4047 : AE 00 50    |                ldx     {$5000}        
-  118 |  1  k.s    208 | Code        | 11 |         |    3 | 00/404A : BD 00 50    |                lda     {$5000},x      
-  119 |  1  k.s    209 | Code        | 11 |         |    2 | 00/404D : C9 2F       |                cmp     #$2F           ; /
-  120 |  1  k.s    210 | Code        | 11 |         |    2 | 00/404F : F0 05       |                beq     spfend         
-  121 |  1  k.s    211 | Code        | 11 |         |    2 | 00/4051 : A9 AF       |                lda     #"/"           
-  122 |  1  k.s    212 | Code        | 11 |         |    3 | 00/4053 : 20 ED FD    |                jsr     {$FDED}        
-  123 |  1  k.s    213 | Macro       | 11 |         |    0 | 00/4056               | spfend         cr                     
-  124 |  1  k.s    213 | Code        | 11 |         |    2 | 00/4056 : A9 8D       |                lda     #$8D           
-  125 |  1  k.s    213 | Code        | 11 |         |    3 | 00/4058 : 20 ED FD    |                jsr     {$FDED}        
-  126 |  1  k.s    214 | Code        | 11 |         |    1 | 00/405B : 60          |                rts                    
-  127 |  1  k.s    215 | Empty       | 11 |         |    0 | 00/405C               |                                       
-  128 |  1  k.s    216 | Code        | 11 |         |    1 | 00/405C : EA          | ShowMenu       nop                    
-  129 |  1  k.s    217 | Code        | 11 |         |    3 | 00/405D : 20 CF 40    |                jsr     title          ; display prog. title
-  130 |  1  k.s    218 | Code        | 11 |         |    2 | 00/4060 : A9 01       |                lda     #$01           ; fist item highlighted
-  131 |  1  k.s    219 | Code        | 11 |         |    3 | 00/4062 : 8D 6F 45    |                sta     curm           
-  132 |  1  k.s    220 | Code        | 11 |         |    3 | 00/4065 : 20 59 41    |                jsr     dispmenu       
-  133 |  1  k.s    221 | Code        | 11 |         |    1 | 00/4068 : 60          |                rts                    
-  134 |  1  k.s    222 | Empty       | 11 |         |    0 | 00/4069               |                                       
-  135 |  1  k.s    223 | Code        | 11 |         |    1 | 00/4069 : EA          | MenuLoop       nop                    
-  136 |  1  k.s    224 | Code        | 11 |         |    3 | 00/406A : 2C 10 C0    | readkey        bit     {$C010}        ; Clear out any data that is already at KBD
-  137 |  1  k.s    225 | Code        | 11 |         |    3 | 00/406D : 2C 00 C0    | keyloop        bit     {$C000}        
-  138 |  1  k.s    226 | Code        | 11 |         |    2 | 00/4070 : 10 FB       |                bpl     keyloop        
-  139 |  1  k.s    227 | Code        | 11 |         |    3 | 00/4072 : AD 00 C0    |                lda     {$C000}        ; get data (in case)
-  140 |  1  k.s    228 | Comment     | 11 |         |    0 | 00/4075               | *
-  141 |  1  k.s    229 | Code        | 11 |         |    2 | 00/4075 : C9 8A       |                cmp     #$8A           ; down arrow key ?
-  142 |  1  k.s    230 | Code        | 11 |         |    2 | 00/4077 : F0 02       |                beq     donext         
-  143 |  1  k.s    231 | Code        | 11 |         |    2 | 00/4079 : D0 12       |                bne     nextk0         
-  144 |  1  k.s    232 | Code        | 11 |         |    3 | 00/407B : EE 6F 45    | donext         inc     curm           ; next nemu item
-  145 |  1  k.s    233 | Code        | 11 |         |    3 | 00/407E : AD 6F 45    |                lda     curm           
-  146 |  1  k.s    234 | Code        | 11 |         |    2 | 00/4081 : C9 05       |                cmp     #{$04}+1       ; last item reached ?
-  147 |  1  k.s    235 | Code        | 11 |         |    2 | 00/4083 : D0 43       |                bne     doloop         ; no
-  148 |  1  k.s    236 | Code        | 11 |         |    2 | 00/4085 : A9 01       |                lda     #$01           ; yes : reset current highlighted mnu item
-  149 |  1  k.s    237 | Code        | 11 |         |    3 | 00/4087 : 8D 6F 45    |                sta     curm           
-  150 |  1  k.s    238 | Code        | 11 |         |    3 | 00/408A : 4C C8 40    |                jmp     doloop         
-  151 |  1  k.s    239 | Code        | 11 |         |    2 | 00/408D : C9 95       | nextk0         cmp     #$95           
-  152 |  1  k.s    240 | Code        | 11 |         |    2 | 00/408F : D0 03       |                bne     nextk1         
-  153 |  1  k.s    241 | Code        | 11 |         |    3 | 00/4091 : 4C 7B 40    |                jmp     donext         
-  154 |  1  k.s    242 | Comment     | 11 |         |    0 | 00/4094               | *
-  155 |  1  k.s    243 | Code        | 11 |         |    1 | 00/4094 : EA          | nextk1         nop                    
-  156 |  1  k.s    244 | Code        | 11 |         |    2 | 00/4095 : C9 8B       |                cmp     #$8B           ; up arrow key ?
-  157 |  1  k.s    245 | Code        | 11 |         |    2 | 00/4097 : F0 02       |                beq     doprev         
-  158 |  1  k.s    246 | Code        | 11 |         |    2 | 00/4099 : D0 0D       |                bne     nextk2         
-  159 |  1  k.s    247 | Code        | 11 |         |    3 | 00/409B : CE 6F 45    | doprev         dec     curm           
-  160 |  1  k.s    248 | Code        | 11 |         |    2 | 00/409E : D0 28       |                bne     doloop         
-  161 |  1  k.s    249 | Code        | 11 |         |    2 | 00/40A0 : A9 04       |                lda     #{$04}         
-  162 |  1  k.s    250 | Code        | 11 |         |    3 | 00/40A2 : 8D 6F 45    |                sta     curm           
-  163 |  1  k.s    251 | Code        | 11 |         |    3 | 00/40A5 : 4C C8 40    |                jmp     doloop         
-  164 |  1  k.s    252 | Code        | 11 |         |    2 | 00/40A8 : C9 88       | nextk2         cmp     #$88           
-  165 |  1  k.s    253 | Code        | 11 |         |    2 | 00/40AA : D0 03       |                bne     nextk3         
-  166 |  1  k.s    254 | Code        | 11 |         |    3 | 00/40AC : 4C 9B 40    |                jmp     doprev         
-  167 |  1  k.s    255 | Empty       | 11 |         |    0 | 00/40AF               |                                       
-  168 |  1  k.s    256 | Code        | 11 |         |    1 | 00/40AF : EA          | nextk3         nop                    
-  169 |  1  k.s    257 | Code        | 11 |         |    2 | 00/40B0 : C9 8D       |                cmp     #$8D           ; return key ?
-  170 |  1  k.s    258 | Code        | 11 |         |    2 | 00/40B2 : D0 14       |                bne     doloop         
-  171 |  1  k.s    259 | Code        | 11 |         |    3 | 00/40B4 : 20 C1 41    |                jsr     docom          ; execute user choice
-  172 |  1  k.s    260 | Code        | 11 |         |    3 | 00/40B7 : AD 12 45    |                lda     quit           
-  173 |  1  k.s    261 | Code        | 11 |         |    2 | 00/40BA : F0 0C       |                beq     doloop         
-  174 |  1  k.s    262 | Macro       | 11 |         |    0 | 00/40BC               |                closef  #$00           ; close all files
-  175 |  1  k.s    262 | Code        | 11 |         |    2 | 00/40BC : A9 00       |                lda     #$00           
-  176 |  1  k.s    262 | Code        | 11 |         |    3 | 00/40BE : 8D 66 44    |                sta     cc_parms+1     
-  177 |  1  k.s    262 | Code        | 11 |         |    3 | 00/40C1 : 20 00 BF    |                jsr     {$BF00}        
-  178 |  1  k.s    262 | Data        | 11 |         |    1 | 00/40C4 : CC          |                dfb     {$CC}          
-  179 |  1  k.s    262 | Data        | 11 |         |    2 | 00/40C5 : 65 44       |                da      cc_parms       
-  180 |  1  k.s    263 | Code        | 11 |         |    1 | 00/40C7 : 60          |                rts                    ; >>> END <<<
-  181 |  1  k.s    264 | Comment     | 11 |         |    0 | 00/40C8               | *
-  182 |  1  k.s    265 | Code        | 11 |         |    3 | 00/40C8 : 20 59 41    | doloop         jsr     dispmenu       
-  183 |  1  k.s    266 | Code        | 11 |         |    3 | 00/40CB : 4C 6A 40    |                jmp     readkey        
-  184 |  1  k.s    267 | Code        | 11 |         |    1 | 00/40CE : 60          |                rts                    
-  185 |  1  k.s    268 | Comment     | 11 |         |    0 | 00/40CF               | *
-  186 |  1  k.s    269 | Comment     | 11 |         |    0 | 00/40CF               | *  TITLE
-  187 |  1  k.s    270 | Comment     | 11 |         |    0 | 00/40CF               | *
-  188 |  1  k.s    271 | Code        | 11 |         |    2 | 00/40CF : A2 28       | title          ldx     #$28           ; 40 col.
-  189 |  1  k.s    272 | Code        | 11 |         |    2 | 00/40D1 : A9 AD       | dotitle        lda     #"-"           
-  190 |  1  k.s    273 | Code        | 11 |         |    3 | 00/40D3 : 20 ED FD    | ozunid_1       jsr     {$FDED}        
-  191 |  1  k.s    274 | Code        | 11 |         |    1 | 00/40D6 : CA          |                dex                    
-  192 |  1  k.s    275 | Code        | 11 |         |    2 | 00/40D7 : D0 FA       |                bne     ozunid_1       
-  193 |  1  k.s    276 | Macro       | 11 |         |    0 | 00/40D9               |                printc  libtit         
-  194 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40D9 : 4C DD 40    |                jmp     ozunid_7       
-  195 |  1  k.s    276 | Data        | 11 |         |    1 | 00/40DC : 00          | ozunid_6       hex     00             
-  197 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40DD : A2 00       |                ldx     #$00           
-  198 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40DF : BD E9 44    | ozunid_9       lda     libtit,x       
-  199 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40E2 : F0 04       |                beq     ozunid_10      
-  200 |  1  k.s    276 | Code        | 11 |         |    1 | 00/40E4 : E8          |                inx                    
-  201 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40E5 : 4C DF 40    |                jmp     ozunid_9       
-  202 |  1  k.s    276 | Empty       | 11 |         |    0 | 00/40E8               | ozunid_10                             
-  203 |  1  k.s    276 | Code        | 11 |         |    1 | 00/40E8 : 8A          |                txa                    
-  204 |  1  k.s    276 | Code        | 11 |         |    1 | 00/40E9 : 4A          |                lsr                    ; / 2
-  205 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40EA : 8D DC 40    |                sta     ozunid_6       
-  206 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40ED : A9 14       |                lda     #$14           ; = half line
-  207 |  1  k.s    276 | Code        | 11 |         |    1 | 00/40EF : 38          |                sec                    
-  208 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40F0 : ED DC 40    |                sbc     ozunid_6       
-  209 |  1  k.s    276 | Code        | 11 |         |    1 | 00/40F3 : AA          |                tax                    
-  210 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40F4 : A9 A0       |                lda     #" "           ; fill with spaces
-  211 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40F6 : 20 ED FD    | ozunid_8       jsr     {$FDED}        
-  212 |  1  k.s    276 | Code        | 11 |         |    1 | 00/40F9 : CA          |                dex                    
-  213 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40FA : D0 FA       |                bne     ozunid_8       
-  215 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40FC : A2 00       |                ldx     #$00           ; in argument
-  216 |  1  k.s    276 | Code        | 11 |         |    3 | 00/40FE : BD E9 44    | ozunid_11      lda     libtit,X       
-  217 |  1  k.s    276 | Code        | 11 |         |    2 | 00/4101 : F0 08       |                beq     ozunid_12      
-  218 |  1  k.s    276 | Code        | 11 |         |    2 | 00/4103 : 09 80       |                ora     #$80           
-  219 |  1  k.s    276 | Code        | 11 |         |    3 | 00/4105 : 20 ED FD    |                jsr     {$FDED}        
-  220 |  1  k.s    276 | Code        | 11 |         |    1 | 00/4108 : E8          |                inx                    
-  221 |  1  k.s    276 | Code        | 11 |         |    2 | 00/4109 : 80 F3       |                bra     ozunid_11      
-  222 |  1  k.s    276 | Empty       | 11 |         |    0 | 00/410B               | ozunid_12                             
-  223 |  1  k.s    277 | Code        | 11 |         |    3 | 00/410B : 20 8E FD    |                jsr     {$FD8E}        
-  224 |  1  k.s    278 | Code        | 11 |         |    2 | 00/410E : A9 AD       |                lda     #"-"           
-  225 |  1  k.s    279 | Code        | 11 |         |    2 | 00/4110 : A2 28       |                ldx     #$28           
-  226 |  1  k.s    280 | Code        | 11 |         |    3 | 00/4112 : 20 ED FD    | ozunid_2       jsr     {$FDED}        
-  227 |  1  k.s    281 | Code        | 11 |         |    1 | 00/4115 : CA          |                dex                    
-  228 |  1  k.s    282 | Code        | 11 |         |    2 | 00/4116 : D0 FA       |                bne     ozunid_2       
-  229 |  1  k.s    283 | Code        | 11 |         |    1 | 00/4118 : 60          |                rts                    
-  230 |  1  k.s    284 | Comment     | 11 |         |    0 | 00/4119               | *
-  231 |  1  k.s    285 | Comment     | 11 |         |    0 | 00/4119               | * PREFIX
-  232 |  1  k.s    286 | Comment     | 11 |         |    0 | 00/4119               | *
-  233 |  1  k.s    287 | Code        | 11 |         |    1 | 00/4119 : EA          | DoPrefix       nop                    
-  234 |  1  k.s    288 | Code        | 11 |         |    3 | 00/411A : 20 00 BF    |                jsr     {$BF00}        ; GET PREFIX
-  235 |  1  k.s    289 | Data        | 11 |         |    1 | 00/411D : C7          |                dfb     {$c7}          
-  236 |  1  k.s    290 | Data        | 11 |         |    2 | 00/411E : 46 44       |                da      c7_parms       
-  237 |  1  k.s    291 | Code        | 11 |         |    2 | 00/4120 : B0 35       |                bcs     dpend          ; error  : exit
-  238 |  1  k.s    292 | Code        | 11 |         |    1 | 00/4122 : 18          |                clc                    ; because print above may set carry
-  239 |  1  k.s    293 | Code        | 11 |         |    3 | 00/4123 : AE 00 50    |                ldx     {$5000}        ; get length
-  240 |  1  k.s    294 | Code        | 11 |         |    2 | 00/4126 : D0 2F       |                bne     dpend          ; prefix already set : rts
-  241 |  1  k.s    295 | Code        | 11 |         |    3 | 00/4128 : AD 30 BF    |                lda     {$BF30}        ; prefix empty : call online
-  242 |  1  k.s    296 | Code        | 11 |         |    3 | 00/412B : 8D 40 44    |                sta     c5_parms+1     ; with last used device
-  243 |  1  k.s    297 | Code        | 11 |         |    3 | 00/412E : 20 00 BF    |                jsr     {$BF00}        ; ONLINE
-  244 |  1  k.s    298 | Data        | 11 |         |    1 | 00/4131 : C5          |                dfb     {$C5}          
-  245 |  1  k.s    299 | Data        | 11 |         |    2 | 00/4132 : 3F 44       |                da      c5_parms       
-  246 |  1  k.s    300 | Code        | 11 |         |    2 | 00/4134 : B0 21       |                bcs     dpend          ; error  : exit
-  247 |  1  k.s    301 | Comment     | 11 |         |    0 | 00/4136               | * adjust prefix for set prefix call
-  248 |  1  k.s    302 | Code        | 11 |         |    3 | 00/4136 : AD 00 50    |                lda     {$5000}        ; get length of prefix
-  249 |  1  k.s    303 | Code        | 11 |         |    2 | 00/4139 : 29 0F       |                and     #$0F           ; in lower nibble
-  250 |  1  k.s    304 | Code        | 11 |         |    1 | 00/413B : AA          |                tax                    ; in x
-  251 |  1  k.s    305 | Code        | 11 |         |    1 | 00/413C : A8          |                tay                    ; saved in y
-  252 |  1  k.s    306 | Code        | 11 |         |    1 | 00/413D : E8          |                inx                    ; +1 for /
-  253 |  1  k.s    307 | Code        | 11 |         |    3 | 00/413E : B9 00 50    | ozunid_3       lda     {$5000},y      ; shift string 1 char. right
-  254 |  1  k.s    308 | Code        | 11 |         |    3 | 00/4141 : 99 01 50    |                sta     {$5000}+1,y    
-  255 |  1  k.s    309 | Code        | 11 |         |    1 | 00/4144 : 88          |                dey                    
-  256 |  1  k.s    310 | Code        | 11 |         |    2 | 00/4145 : D0 F7       |                bne     ozunid_3       
-  257 |  1  k.s    311 | Code        | 11 |         |    2 | 00/4147 : A9 2F       |                lda     #$2f           ; add  "/"
-  258 |  1  k.s    312 | Code        | 11 |         |    3 | 00/4149 : 8D 01 50    |                sta     {$5000}+1      ; before prefix
-  259 |  1  k.s    313 | Code        | 11 |         |    3 | 00/414C : 8E 00 50    |                stx     {$5000}        ; length first
-  260 |  1  k.s    314 | Code        | 11 |         |    3 | 00/414F : 20 00 BF    |                jsr     {$BF00}        ; SET PREFIX
-  261 |  1  k.s    315 | Data        | 11 |         |    1 | 00/4152 : C6          |                dfb     {$c6}          
-  262 |  1  k.s    316 | Data        | 11 |         |    2 | 00/4153 : 43 44       |                da      c6_parms       
-  263 |  1  k.s    317 | Code        | 11 |         |    2 | 00/4155 : B0 00       |                bcs     dpend          ; error  : exit
-  264 |  1  k.s    318 | Code        | 11 |         |    1 | 00/4157 : EA          | dpend          nop                    
-  265 |  1  k.s    319 | Code        | 11 |         |    1 | 00/4158 : 60          |                rts                    
-  266 |  1  k.s    320 | Comment     | 11 |         |    0 | 00/4159               | *
-  267 |  1  k.s    321 | Comment     | 11 |         |    0 | 00/4159               | * * * * * * Display menu routine * * * * * *
-  268 |  1  k.s    322 | Comment     | 11 |         |    0 | 00/4159               | *
-  269 |  1  k.s    323 | Code        | 11 |         |    1 | 00/4159 : EA          | dispmenu       nop                    
-  270 |  1  k.s    324 | Code        | 11 |         |    2 | 00/415A : A9 04       |                lda     #{$04}         
-  271 |  1  k.s    325 | Code        | 11 |         |    2 | 00/415C : 85 25       |                sta     {$25}          
-  272 |  1  k.s    326 | Code        | 11 |         |    3 | 00/415E : 20 22 FC    |                jsr     {$FC22}        
-  273 |  1  k.s    327 | Code        | 11 |         |    2 | 00/4161 : A2 00       |                ldx     #$00           
-  274 |  1  k.s    328 | Code        | 11 |         |    3 | 00/4163 : BD 62 45    | loop           lda     mtab,x         ; read menu #
-  275 |  1  k.s    329 | Code        | 11 |         |    2 | 00/4166 : F0 2A       |                beq     _fin           ; if = 0 then end
-  276 |  1  k.s    330 | Code        | 11 |         |    1 | 00/4168 : 48          |                pha                    ; save meun #
-  277 |  1  k.s    331 | Code        | 11 |         |    1 | 00/4169 : E8          |                inx                    ; read string memory location
-  278 |  1  k.s    332 | Code        | 11 |         |    3 | 00/416A : BD 62 45    |                lda     mtab,x         ; in ptr1
-  279 |  1  k.s    333 | Code        | 11 |         |    2 | 00/416D : 85 06       |                sta     {$06}          
-  280 |  1  k.s    334 | Code        | 11 |         |    1 | 00/416F : E8          |                inx                    
-  281 |  1  k.s    335 | Code        | 11 |         |    3 | 00/4170 : BD 62 45    |                lda     mtab,x         
-  282 |  1  k.s    336 | Code        | 11 |         |    2 | 00/4173 : 85 07       |                sta     {$06}+1        
-  283 |  1  k.s    337 | Code        | 11 |         |    1 | 00/4175 : 68          |                pla                    ; get menu #
-  284 |  1  k.s    338 | Code        | 11 |         |    3 | 00/4176 : CD 6F 45    |                cmp     curm           ; = menu # to hilight ?
-  285 |  1  k.s    339 | Code        | 11 |         |    2 | 00/4179 : D0 08       |                bne     prn            ; no : set flag to 0
-  286 |  1  k.s    340 | Code        | 11 |         |    2 | 00/417B : A9 01       |                lda     #$01           ; yes : set flag to 1
-  287 |  1  k.s    341 | Code        | 11 |         |    3 | 00/417D : 8D 70 45    |                sta     invflag        
-  288 |  1  k.s    342 | Code        | 11 |         |    3 | 00/4180 : 4C 88 41    |                jmp     prn2           
-  289 |  1  k.s    343 | Code        | 11 |         |    2 | 00/4183 : A9 00       | prn            lda     #$00           
-  290 |  1  k.s    344 | Code        | 11 |         |    3 | 00/4185 : 8D 70 45    |                sta     invflag        
-  291 |  1  k.s    345 | Code        | 11 |         |    3 | 00/4188 : 20 93 41    | prn2           jsr     printm         ; display menu item
-  292 |  1  k.s    346 | Code        | 11 |         |    1 | 00/418B : E8          |                inx                    
-  293 |  1  k.s    347 | Code        | 11 |         |    3 | 00/418C : 4C 63 41    |                jmp     loop           ; next item
-  294 |  1  k.s    348 | Code        | 11 |         |    3 | 00/418F : 8D 0E C0    |                sta     {$C00E}        
-  295 |  1  k.s    349 | Code        | 11 |         |    1 | 00/4192 : 60          | _fin           rts                    
-  296 |  1  k.s    350 | Comment     | 11 |         |    0 | 00/4193               | *
-  297 |  1  k.s    351 | Comment     | 11 |         |    0 | 00/4193               | * * * * * * Print menu item * * * * * * 
-  298 |  1  k.s    352 | Comment     | 11 |         |    0 | 00/4193               | *
-  299 |  1  k.s    353 | Code        | 11 |         |    1 | 00/4193 : EA          | printm         nop                    
-  300 |  1  k.s    354 | Code        | 11 |         |    3 | 00/4194 : 8D 0F C0    |                sta     {$C00F}        ; to get lowercase inverse
-  301 |  1  k.s    355 | Comment     | 11 |         |    0 | 00/4197               | * charsets explained here : 
-  302 |  1  k.s    356 | Comment     | 11 |         |    0 | 00/4197               | * https://retrocomputing.stackexchange.com/questions/8652/
-  303 |  1  k.s    357 | Comment     | 11 |         |    0 | 00/4197               | * and here :
-  304 |  1  k.s    358 | Comment     | 11 |         |    0 | 00/4197               | * http://hackzapple.org/scripts_php/index.php?menu=14&mod=8517283d55e912b0b5ac842147e28904a4a751d3&page=7
-  305 |  1  k.s    359 | Code        | 11 |         |    2 | 00/4197 : A0 00       |                ldy     #$00           
-  306 |  1  k.s    360 | Code        | 11 |         |    2 | 00/4199 : B1 06       | lprint         lda     ({$06}),y      ; read menu string
-  307 |  1  k.s    361 | Code        | 11 |         |    2 | 00/419B : F0 1D       |                beq     printend       ; ended by 0
-  308 |  1  k.s    362 | Code        | 11 |         |    1 | 00/419D : 48          |                pha                    ; save char. to display
-  309 |  1  k.s    363 | Code        | 11 |         |    3 | 00/419E : AD 70 45    |                lda     invflag        ; normal or inverse ?
-  310 |  1  k.s    364 | Code        | 11 |         |    2 | 00/41A1 : F0 0F       |                beq     normal         ; normal char.
-  311 |  1  k.s    365 | Code        | 11 |         |    1 | 00/41A3 : 68          |                pla                    
-  312 |  1  k.s    366 | Code        | 11 |         |    2 | 00/41A4 : C9 E0       |                cmp     #$E0           ; #$E0 = start of lowercase inverse
-  313 |  1  k.s    367 | Code        | 11 |         |    2 | 00/41A6 : B0 05       |                bge     lower          
-  314 |  1  k.s    368 | Code        | 11 |         |    2 | 00/41A8 : 29 3F       |                and     #$3F           ; to get inverse uppercase
-  315 |  1  k.s    369 | Code        | 11 |         |    3 | 00/41AA : 4C B3 41    |                jmp     out            
-  316 |  1  k.s    370 | Code        | 11 |         |    2 | 00/41AD : 29 7F       | lower          and     #$7F           ; to get inverse lowercase
-  317 |  1  k.s    371 | Code        | 11 |         |    3 | 00/41AF : 4C B3 41    |                jmp     out            
-  318 |  1  k.s    372 | Code        | 11 |         |    1 | 00/41B2 : 68          | normal         pla                    
-  319 |  1  k.s    373 | Code        | 11 |         |    3 | 00/41B3 : 20 ED FD    | out            jsr     {$FDED}        
-  320 |  1  k.s    374 | Code        | 11 |         |    1 | 00/41B6 : C8          |                iny                    
-  321 |  1  k.s    375 | Code        | 11 |         |    3 | 00/41B7 : 4C 99 41    |                jmp     lprint         
-  322 |  1  k.s    376 | Code        | 11 |         |    1 | 00/41BA : EA          | printend       nop                    
-  323 |  1  k.s    377 | Code        | 11 |         |    2 | 00/41BB : A9 8D       |                lda     #$8D           ; next line
-  324 |  1  k.s    378 | Code        | 11 |         |    3 | 00/41BD : 20 ED FD    |                jsr     {$FDED}        
-  325 |  1  k.s    379 | Code        | 11 |         |    1 | 00/41C0 : 60          |                rts                    
-  326 |  1  k.s    380 | Empty       | 11 |         |    0 | 00/41C1               |                                       
-  327 |  1  k.s    381 | Empty       | 11 |         |    0 | 00/41C1               |                                       
-  328 |  1  k.s    382 | Comment     | 11 |         |    0 | 00/41C1               | * * * * * * * * *
-  329 |  1  k.s    383 | Comment     | 11 |         |    0 | 00/41C1               | * Do commands   *
-  330 |  1  k.s    384 | Comment     | 11 |         |    0 | 00/41C1               | * * * * * * * * *
-  331 |  1  k.s    385 | Comment     | 11 |         |    0 | 00/41C1               | *
-  332 |  1  k.s    386 | Code        | 11 |         |    1 | 00/41C1 : EA          | docom          nop                    
-  333 |  1  k.s    387 | Code        | 11 |         |    3 | 00/41C2 : AD 6F 45    |                lda     curm           
-  334 |  1  k.s    388 | Code        | 11 |         |    2 | 00/41C5 : C9 01       |                cmp     #$01           ; change préfix ?
-  335 |  1  k.s    389 | Code        | 11 |         |    2 | 00/41C7 : D0 03       |                bne     nextcmd        
-  336 |  1  k.s    390 | Code        | 11 |         |    3 | 00/41C9 : 4C E0 41    |                jmp     ChangePF       
-  337 |  1  k.s    391 | Code        | 11 |         |    2 | 00/41CC : C9 02       | nextcmd        cmp     #$02           ; encrypt file ?
-  338 |  1  k.s    392 | Code        | 11 |         |    2 | 00/41CE : D0 03       |                bne     next2          
-  339 |  1  k.s    393 | Code        | 11 |         |    3 | 00/41D0 : 4C 61 42    |                jmp     Encrypt        
-  340 |  1  k.s    394 | Code        | 11 |         |    2 | 00/41D3 : C9 03       | next2          cmp     #$03           ; decrypt file ?
-  341 |  1  k.s    395 | Code        | 11 |         |    2 | 00/41D5 : D0 03       |                bne     next3          
-  342 |  1  k.s    396 | Code        | 11 |         |    3 | 00/41D7 : 4C 7A 43    |                jmp     Decrypt        
-  343 |  1  k.s    397 | Code        | 11 |         |    2 | 00/41DA : A9 01       | next3          lda     #$01           ; else : quit
-  344 |  1  k.s    398 | Code        | 11 |         |    3 | 00/41DC : 8D 12 45    |                sta     quit           
-  345 |  1  k.s    399 | Code        | 11 |         |    1 | 00/41DF : 60          |                rts                    
-  346 |  1  k.s    400 | Empty       | 11 |         |    0 | 00/41E0               |                                       
-  347 |  1  k.s    401 | Code        | 11 |         |    1 | 00/41E0 : EA          | ChangePF       nop                    
-  348 |  1  k.s    402 | Code        | 11 |         |    2 | 00/41E1 : A9 10       |                lda     #$10           
-  349 |  1  k.s    403 | Code        | 11 |         |    2 | 00/41E3 : 85 25       |                sta     {$25}          
-  350 |  1  k.s    404 | Code        | 11 |         |    3 | 00/41E5 : 20 22 FC    |                jsr     {$FC22}        
-  351 |  1  k.s    405 | Macro       | 11 |         |    0 | 00/41E8               |                print   newpf          ; invite user
-  352 |  1  k.s    405 | Code        | 11 |         |    2 | 00/41E8 : A2 00       |                ldx     #$00           ; in argument
-  353 |  1  k.s    405 | Code        | 11 |         |    3 | 00/41EA : BD 13 45    | ozunid_13      lda     newpf,X        
-  354 |  1  k.s    405 | Code        | 11 |         |    2 | 00/41ED : F0 08       |                beq     ozunid_14      
-  355 |  1  k.s    405 | Code        | 11 |         |    2 | 00/41EF : 09 80       |                ora     #$80           
-  356 |  1  k.s    405 | Code        | 11 |         |    3 | 00/41F1 : 20 ED FD    |                jsr     {$FDED}        
-  357 |  1  k.s    405 | Code        | 11 |         |    1 | 00/41F4 : E8          |                inx                    
-  358 |  1  k.s    405 | Code        | 11 |         |    2 | 00/41F5 : 80 F3       |                bra     ozunid_13      
-  359 |  1  k.s    405 | Empty       | 11 |         |    0 | 00/41F7               | ozunid_14                             
-  360 |  1  k.s    406 | Macro       | 11 |         |    0 | 00/41F7               |                cr                     
-  361 |  1  k.s    406 | Code        | 11 |         |    2 | 00/41F7 : A9 8D       |                lda     #$8D           
-  362 |  1  k.s    406 | Code        | 11 |         |    3 | 00/41F9 : 20 ED FD    |                jsr     {$FDED}        
-  363 |  1  k.s    407 | Macro       | 11 |         |    0 | 00/41FC               |                input   {$5000}        ; get new prefix from user
-  364 |  1  k.s    407 | Empty       | 11 |         |    0 | 00/41FC               |                                       
-  365 |  1  k.s    407 | Code        | 11 |         |    3 | 00/41FC : 2C 10 C0    |                bit     {$C010}        
-  366 |  1  k.s    407 | Code        | 11 |         |    3 | 00/41FF : 4C 03 42    |                jmp     ozunid_16      
-  367 |  1  k.s    407 | Data        | 11 |         |    1 | 00/4202 : 00          | ozunid_15      hex     00             
-  368 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4203 : A5 33       | ozunid_16      lda     {$33}          ; save prompt char.
-  369 |  1  k.s    407 | Code        | 11 |         |    3 | 00/4205 : 8D 02 42    |                sta     ozunid_15      
-  370 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4208 : A9 BE       |                lda     #$BE           ; ">"
-  371 |  1  k.s    407 | Code        | 11 |         |    2 | 00/420A : 85 33       |                sta     {$33}          
-  372 |  1  k.s    407 | Code        | 11 |         |    3 | 00/420C : 20 6A FD    |                jsr     {$FD6A}        
-  373 |  1  k.s    407 | Code        | 11 |         |    1 | 00/420F : 8A          |                txa                    
-  374 |  1  k.s    407 | Code        | 11 |         |    1 | 00/4210 : A8          |                tay                    ; save length in Y
-  375 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4211 : F0 10       |                beq     ozunid_18      
-  376 |  1  k.s    407 | Code        | 11 |         |    3 | 00/4213 : BD 00 02    | ozunid_17      lda     $200,X         
-  377 |  1  k.s    407 | Code        | 11 |         |    3 | 00/4216 : 9D 01 50    |                sta     {$5000}+1,x    
-  378 |  1  k.s    407 | Code        | 11 |         |    1 | 00/4219 : CA          |                dex                    
-  379 |  1  k.s    407 | Code        | 11 |         |    2 | 00/421A : E0 FF       |                cpx     #$FF           
-  380 |  1  k.s    407 | Code        | 11 |         |    2 | 00/421C : D0 F5       |                bne     ozunid_17      
-  381 |  1  k.s    407 | Code        | 11 |         |    2 | 00/421E : A9 00       |                lda     #$00           
-  382 |  1  k.s    407 | Code        | 11 |         |    3 | 00/4220 : 99 01 50    |                sta     {$5000}+1,y    ; zero at the end
-  383 |  1  k.s    407 | Code        | 11 |         |    3 | 00/4223 : 8C 00 50    | ozunid_18      sty     {$5000}        ; length in first byte
-  384 |  1  k.s    407 | Code        | 11 |         |    3 | 00/4226 : AD 02 42    |                lda     ozunid_15      
-  385 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4229 : 85 33       |                sta     {$33}          
-  386 |  1  k.s    408 | Code        | 11 |         |    3 | 00/422B : AD 00 50    |                lda     {$5000}        ; get length
-  387 |  1  k.s    409 | Code        | 11 |         |    2 | 00/422E : F0 20       |                beq     okpf           
-  388 |  1  k.s    410 | Code        | 11 |         |    3 | 00/4230 : 20 00 BF    |                jsr     {$BF00}        ; SET PREFIX
-  389 |  1  k.s    411 | Data        | 11 |         |    1 | 00/4233 : C6          |                dfb     {$c6}          
-  390 |  1  k.s    412 | Data        | 11 |         |    2 | 00/4234 : 43 44       |                da      c6_parms       
-  391 |  1  k.s    413 | Code        | 11 |         |    2 | 00/4236 : 90 18       |                bcc     okpf           
-  392 |  1  k.s    414 | Code        | 11 |         |    1 | 00/4238 : 48          |                pha                    
-  393 |  1  k.s    415 | Macro       | 11 |         |    0 | 00/4239               |                print   err            
-  394 |  1  k.s    415 | Code        | 11 |         |    2 | 00/4239 : A2 00       |                ldx     #$00           ; in argument
-  395 |  1  k.s    415 | Code        | 11 |         |    3 | 00/423B : BD 05 45    | ozunid_19      lda     err,X          
-  396 |  1  k.s    415 | Code        | 11 |         |    2 | 00/423E : F0 08       |                beq     ozunid_20      
-  397 |  1  k.s    415 | Code        | 11 |         |    2 | 00/4240 : 09 80       |                ora     #$80           
-  398 |  1  k.s    415 | Code        | 11 |         |    3 | 00/4242 : 20 ED FD    |                jsr     {$FDED}        
-  399 |  1  k.s    415 | Code        | 11 |         |    1 | 00/4245 : E8          |                inx                    
-  400 |  1  k.s    415 | Code        | 11 |         |    2 | 00/4246 : 80 F3       |                bra     ozunid_19      
-  401 |  1  k.s    415 | Empty       | 11 |         |    0 | 00/4248               | ozunid_20                             
-  402 |  1  k.s    416 | Code        | 11 |         |    1 | 00/4248 : 68          |                pla                    
-  403 |  1  k.s    417 | Code        | 11 |         |    1 | 00/4249 : AA          |                tax                    
-  404 |  1  k.s    418 | Code        | 11 |         |    3 | 00/424A : 20 44 F9    |                jsr     {$F944}        
-  405 |  1  k.s    419 | Code        | 11 |         |    3 | 00/424D : 20 0C FD    |                jsr     {$FD0C}        
-  406 |  1  k.s    420 | Code        | 11 |         |    3 | 00/4250 : 20 19 41    | okpf           jsr     DoPrefix       
-  407 |  1  k.s    421 | Code        | 11 |         |    3 | 00/4253 : 20 27 40    |                jsr     ShowPF         
-  408 |  1  k.s    422 | Code        | 11 |         |    2 | 00/4256 : A9 10       |                lda     #$10           
-  409 |  1  k.s    423 | Code        | 11 |         |    2 | 00/4258 : 85 25       |                sta     {$25}          
-  410 |  1  k.s    424 | Code        | 11 |         |    3 | 00/425A : 20 22 FC    |                jsr     {$FC22}        
-  411 |  1  k.s    425 | Code        | 11 |         |    3 | 00/425D : 20 42 FC    |                jsr     {$FC42}        
-  412 |  1  k.s    426 | Code        | 11 |         |    1 | 00/4260 : 60          |                rts                    
-  413 |  1  k.s    427 | Empty       | 11 |         |    0 | 00/4261               |                                       
-  414 |  1  k.s    428 | Code        | 11 |         |    1 | 00/4261 : EA          | Encrypt        nop                    ; Encrypte a file
-  415 |  1  k.s    429 | Code        | 11 |         |    2 | 00/4262 : A9 10       |                lda     #$10           
-  416 |  1  k.s    430 | Code        | 11 |         |    2 | 00/4264 : 85 25       |                sta     {$25}          
-  417 |  1  k.s    431 | Code        | 11 |         |    3 | 00/4266 : 20 22 FC    |                jsr     {$FC22}        
-  418 |  1  k.s    432 | Macro       | 11 |         |    0 | 00/4269               |                print   encryf         ; invite user
-  419 |  1  k.s    432 | Code        | 11 |         |    2 | 00/4269 : A2 00       |                ldx     #$00           ; in argument
-  420 |  1  k.s    432 | Code        | 11 |         |    3 | 00/426B : BD 26 45    | ozunid_21      lda     encryf,X       
-  421 |  1  k.s    432 | Code        | 11 |         |    2 | 00/426E : F0 08       |                beq     ozunid_22      
-  422 |  1  k.s    432 | Code        | 11 |         |    2 | 00/4270 : 09 80       |                ora     #$80           
-  423 |  1  k.s    432 | Code        | 11 |         |    3 | 00/4272 : 20 ED FD    |                jsr     {$FDED}        
-  424 |  1  k.s    432 | Code        | 11 |         |    1 | 00/4275 : E8          |                inx                    
-  425 |  1  k.s    432 | Code        | 11 |         |    2 | 00/4276 : 80 F3       |                bra     ozunid_21      
-  426 |  1  k.s    432 | Empty       | 11 |         |    0 | 00/4278               | ozunid_22                             
-  427 |  1  k.s    433 | Macro       | 11 |         |    0 | 00/4278               |                cr                     
-  428 |  1  k.s    433 | Code        | 11 |         |    2 | 00/4278 : A9 8D       |                lda     #$8D           
-  429 |  1  k.s    433 | Code        | 11 |         |    3 | 00/427A : 20 ED FD    |                jsr     {$FDED}        
-  430 |  1  k.s    434 | Macro       | 11 |         |    0 | 00/427D               |                input   fname          
-  431 |  1  k.s    434 | Empty       | 11 |         |    0 | 00/427D               |                                       
-  432 |  1  k.s    434 | Code        | 11 |         |    3 | 00/427D : 2C 10 C0    |                bit     {$C010}        
-  433 |  1  k.s    434 | Code        | 11 |         |    3 | 00/4280 : 4C 84 42    |                jmp     ozunid_24      
-  434 |  1  k.s    434 | Data        | 11 |         |    1 | 00/4283 : 00          | ozunid_23      hex     00             
-  435 |  1  k.s    434 | Code        | 11 |         |    2 | 00/4284 : A5 33       | ozunid_24      lda     {$33}          ; save prompt char.
-  436 |  1  k.s    434 | Code        | 11 |         |    3 | 00/4286 : 8D 83 42    |                sta     ozunid_23      
-  437 |  1  k.s    434 | Code        | 11 |         |    2 | 00/4289 : A9 BE       |                lda     #$BE           ; ">"
-  438 |  1  k.s    434 | Code        | 11 |         |    2 | 00/428B : 85 33       |                sta     {$33}          
-  439 |  1  k.s    434 | Code        | 11 |         |    3 | 00/428D : 20 6A FD    |                jsr     {$FD6A}        
-  440 |  1  k.s    434 | Code        | 11 |         |    1 | 00/4290 : 8A          |                txa                    
-  441 |  1  k.s    434 | Code        | 11 |         |    1 | 00/4291 : A8          |                tay                    ; save length in Y
-  442 |  1  k.s    434 | Code        | 11 |         |    2 | 00/4292 : F0 10       |                beq     ozunid_26      
-  443 |  1  k.s    434 | Code        | 11 |         |    3 | 00/4294 : BD 00 02    | ozunid_25      lda     $200,X         
-  444 |  1  k.s    434 | Code        | 11 |         |    3 | 00/4297 : 9D 68 44    |                sta     fname+1,x      
-  445 |  1  k.s    434 | Code        | 11 |         |    1 | 00/429A : CA          |                dex                    
-  446 |  1  k.s    434 | Code        | 11 |         |    2 | 00/429B : E0 FF       |                cpx     #$FF           
-  447 |  1  k.s    434 | Code        | 11 |         |    2 | 00/429D : D0 F5       |                bne     ozunid_25      
-  448 |  1  k.s    434 | Code        | 11 |         |    2 | 00/429F : A9 00       |                lda     #$00           
-  449 |  1  k.s    434 | Code        | 11 |         |    3 | 00/42A1 : 99 68 44    |                sta     fname+1,y      ; zero at the end
-  450 |  1  k.s    434 | Code        | 11 |         |    3 | 00/42A4 : 8C 67 44    | ozunid_26      sty     fname          ; length in first byte
-  451 |  1  k.s    434 | Code        | 11 |         |    3 | 00/42A7 : AD 83 42    |                lda     ozunid_23      
-  452 |  1  k.s    434 | Code        | 11 |         |    2 | 00/42AA : 85 33       |                sta     {$33}          
-  453 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42AC : AD 67 44    |                lda     fname          ; get length of filename
-  454 |  1  k.s    436 | Code        | 11 |         |    2 | 00/42AF : D0 03       |                bne     _1             
-  455 |  1  k.s    437 | Code        | 11 |         |    3 | 00/42B1 : 4C 60 43    |                jmp     outenc         ; 0 length : exit
-  456 |  1  k.s    438 | Code        | 11 |         |    3 | 00/42B4 : 20 00 BF    | _1             jsr     {$BF00}        ; OPEN file to encrypt
-  457 |  1  k.s    439 | Data        | 11 |         |    1 | 00/42B7 : C8          |                dfb     {$C8}          
-  458 |  1  k.s    440 | Data        | 11 |         |    2 | 00/42B8 : 49 44       |                da      c8_parms       
-  459 |  1  k.s    441 | Code        | 11 |         |    2 | 00/42BA : 90 1B       |                bcc     okopen         ; open ok ?
-  460 |  1  k.s    442 | Code        | 11 |         |    1 | 00/42BC : 48          | doerr          pha                    ; no
-  461 |  1  k.s    443 | Macro       | 11 |         |    0 | 00/42BD               |                print   err            
-  462 |  1  k.s    443 | Code        | 11 |         |    2 | 00/42BD : A2 00       |                ldx     #$00           ; in argument
-  463 |  1  k.s    443 | Code        | 11 |         |    3 | 00/42BF : BD 05 45    | ozunid_27      lda     err,X          
-  464 |  1  k.s    443 | Code        | 11 |         |    2 | 00/42C2 : F0 08       |                beq     ozunid_28      
-  465 |  1  k.s    443 | Code        | 11 |         |    2 | 00/42C4 : 09 80       |                ora     #$80           
-  466 |  1  k.s    443 | Code        | 11 |         |    3 | 00/42C6 : 20 ED FD    |                jsr     {$FDED}        
-  467 |  1  k.s    443 | Code        | 11 |         |    1 | 00/42C9 : E8          |                inx                    
-  468 |  1  k.s    443 | Code        | 11 |         |    2 | 00/42CA : 80 F3       |                bra     ozunid_27      
-  469 |  1  k.s    443 | Empty       | 11 |         |    0 | 00/42CC               | ozunid_28                             
-  470 |  1  k.s    444 | Code        | 11 |         |    1 | 00/42CC : 68          |                pla                    
-  471 |  1  k.s    445 | Code        | 11 |         |    1 | 00/42CD : AA          |                tax                    
-  472 |  1  k.s    446 | Code        | 11 |         |    3 | 00/42CE : 20 44 F9    |                jsr     {$F944}        
-  473 |  1  k.s    447 | Code        | 11 |         |    3 | 00/42D1 : 20 0C FD    |                jsr     {$FD0C}        
-  474 |  1  k.s    448 | Code        | 11 |         |    3 | 00/42D4 : 4C 60 43    |                jmp     outenc         ; clear screen and exit
-  475 |  1  k.s    449 | Comment     | 11 |         |    0 | 00/42D7               | *
-  476 |  1  k.s    450 | Macro       | 11 |         |    0 | 00/42D7               | okopen         closef  #$00           ; close all
-  477 |  1  k.s    450 | Code        | 11 |         |    2 | 00/42D7 : A9 00       |                lda     #$00           
-  478 |  1  k.s    450 | Code        | 11 |         |    3 | 00/42D9 : 8D 66 44    |                sta     cc_parms+1     
-  479 |  1  k.s    450 | Code        | 11 |         |    3 | 00/42DC : 20 00 BF    |                jsr     {$BF00}        
-  480 |  1  k.s    450 | Data        | 11 |         |    1 | 00/42DF : CC          |                dfb     {$CC}          
-  481 |  1  k.s    450 | Data        | 11 |         |    2 | 00/42E0 : 65 44       |                da      cc_parms       
-  482 |  1  k.s    451 | Code        | 11 |         |    2 | 00/42E2 : 90 03       |                bcc     closeok        
-  483 |  1  k.s    452 | Code        | 11 |         |    3 | 00/42E4 : 4C BC 42    |                jmp     doerr          
-  484 |  1  k.s    453 | Code        | 11 |         |    1 | 00/42E7 : EA          | closeok        nop                    ; output file
-  485 |  1  k.s    454 | Code        | 11 |         |    3 | 00/42E8 : 20 7C 43    |                jsr     MovefileName   ; copy filename +".K"
-  486 |  1  k.s    455 | Code        | 11 |         |    3 | 00/42EB : 20 00 BF    |                jsr     {$BF00}        ; OPEN output file
-  487 |  1  k.s    456 | Data        | 11 |         |    1 | 00/42EE : C8          |                dfb     {$C8}          
-  488 |  1  k.s    457 | Data        | 11 |         |    2 | 00/42EF : 4F 44       |                da      c8_parmsW      
-  489 |  1  k.s    458 | Code        | 11 |         |    2 | 00/42F1 : C9 46       |                cmp     #$46           ; file not found ?
-  490 |  1  k.s    459 | Code        | 11 |         |    2 | 00/42F3 : F0 3D       |                beq     noexist        
-  491 |  1  k.s    460 | Code        | 11 |         |    2 | 00/42F5 : C9 00       |                cmp     #$00           
-  492 |  1  k.s    461 | Code        | 11 |         |    2 | 00/42F7 : D0 C3       |                bne     doerr          ; use above error management
-  493 |  1  k.s    462 | Comment     | 11 |         |    0 | 00/42F9               | * file .K exists 
-  494 |  1  k.s    463 | Macro       | 11 |         |    0 | 00/42F9               |                closef  refW           ; close it
-  495 |  1  k.s    463 | Code        | 11 |         |    3 | 00/42F9 : AD 54 44    |                lda     refW           
-  496 |  1  k.s    463 | Code        | 11 |         |    3 | 00/42FC : 8D 66 44    |                sta     cc_parms+1     
-  497 |  1  k.s    463 | Code        | 11 |         |    3 | 00/42FF : 20 00 BF    |                jsr     {$BF00}        
-  498 |  1  k.s    463 | Data        | 11 |         |    1 | 00/4302 : CC          |                dfb     {$CC}          
-  499 |  1  k.s    463 | Data        | 11 |         |    2 | 00/4303 : 65 44       |                da      cc_parms       
-  500 |  1  k.s    464 | Macro       | 11 |         |    0 | 00/4305               |                print   quest1         ; erase ?
-  501 |  1  k.s    464 | Code        | 11 |         |    2 | 00/4305 : A2 00       |                ldx     #$00           ; in argument
-  502 |  1  k.s    464 | Code        | 11 |         |    3 | 00/4307 : BD 43 45    | ozunid_29      lda     quest1,X       
-  503 |  1  k.s    464 | Code        | 11 |         |    2 | 00/430A : F0 08       |                beq     ozunid_30      
-  504 |  1  k.s    464 | Code        | 11 |         |    2 | 00/430C : 09 80       |                ora     #$80           
-  505 |  1  k.s    464 | Code        | 11 |         |    3 | 00/430E : 20 ED FD    |                jsr     {$FDED}        
-  506 |  1  k.s    464 | Code        | 11 |         |    1 | 00/4311 : E8          |                inx                    
-  507 |  1  k.s    464 | Code        | 11 |         |    2 | 00/4312 : 80 F3       |                bra     ozunid_29      
-  508 |  1  k.s    464 | Empty       | 11 |         |    0 | 00/4314               | ozunid_30                             
-  509 |  1  k.s    465 | Macro       | 11 |         |    0 | 00/4314               |                getYN                  
-  510 |  1  k.s    465 | Code        | 11 |         |    3 | 00/4314 : 20 0C FD    |                jsr     {$FD0C}        ; otherwise, Carry = 1
-  511 |  1  k.s    465 | Code        | 11 |         |    2 | 00/4317 : C9 D9       |                cmp     #"Y"           
-  512 |  1  k.s    465 | Code        | 11 |         |    2 | 00/4319 : F0 08       |                beq     ozunid_31      
-  513 |  1  k.s    465 | Code        | 11 |         |    2 | 00/431B : C9 F9       |                cmp     #"y"           
-  514 |  1  k.s    465 | Code        | 11 |         |    2 | 00/431D : F0 04       |                beq     ozunid_31      
-  515 |  1  k.s    465 | Code        | 11 |         |    1 | 00/431F : 38          |                sec                    
-  516 |  1  k.s    465 | Code        | 11 |         |    3 | 00/4320 : 4C 24 43    |                jmp     ozunid_32      
-  517 |  1  k.s    465 | Code        | 11 |         |    1 | 00/4323 : 18          | ozunid_31      clc                    
-  518 |  1  k.s    465 | Code        | 11 |         |    1 | 00/4324 : EA          | ozunid_32      nop                    
-  519 |  1  k.s    466 | Code        | 11 |         |    2 | 00/4325 : B0 39       |                bcs     outenc         ; no : clear screen and exit
-  520 |  1  k.s    467 | Code        | 11 |         |    3 | 00/4327 : 20 00 BF    |                jsr     {$BF00}        
-  521 |  1  k.s    468 | Data        | 11 |         |    1 | 00/432A : C1          |                dfb     {$C1}          
-  522 |  1  k.s    469 | Data        | 11 |         |    2 | 00/432B : 3C 44       |                da      c1_params      
-  523 |  1  k.s    470 | Code        | 11 |         |    2 | 00/432D : 90 03       |                bcc     noexist        
-  524 |  1  k.s    471 | Code        | 11 |         |    3 | 00/432F : 4C BC 42    |                jmp     doerr          
-  525 |  1  k.s    472 | Comment     | 11 |         |    0 | 00/4332               | *
-  526 |  1  k.s    473 | Code        | 11 |         |    1 | 00/4332 : EA          | noexist        nop                    
-  527 |  1  k.s    474 | Code        | 11 |         |    3 | 00/4333 : 20 00 BF    |                jsr     {$BF00}        ; CREATE output file
-  528 |  1  k.s    475 | Data        | 11 |         |    1 | 00/4336 : C0          |                dfb     {$C0}          
-  529 |  1  k.s    476 | Data        | 11 |         |    2 | 00/4337 : 30 44       |                da      c0_parms       
-  530 |  1  k.s    477 | Code        | 11 |         |    2 | 00/4339 : B0 81       |                bcs     doerr          
-  531 |  1  k.s    478 | Macro       | 11 |         |    0 | 00/433B               |                closef  #$00           ; close all
-  532 |  1  k.s    478 | Code        | 11 |         |    2 | 00/433B : A9 00       |                lda     #$00           
-  533 |  1  k.s    478 | Code        | 11 |         |    3 | 00/433D : 8D 66 44    |                sta     cc_parms+1     
-  534 |  1  k.s    478 | Code        | 11 |         |    3 | 00/4340 : 20 00 BF    |                jsr     {$BF00}        
-  535 |  1  k.s    478 | Data        | 11 |         |    1 | 00/4343 : CC          |                dfb     {$CC}          
-  536 |  1  k.s    478 | Data        | 11 |         |    2 | 00/4344 : 65 44       |                da      cc_parms       
-  537 |  1  k.s    479 | Code        | 11 |         |    3 | 00/4346 : 20 00 BF    |                jsr     {$BF00}        ; OPEN output file
-  538 |  1  k.s    480 | Data        | 11 |         |    1 | 00/4349 : C8          |                dfb     {$C8}          
-  539 |  1  k.s    481 | Data        | 11 |         |    2 | 00/434A : 4F 44       |                da      c8_parmsW      
-  540 |  1  k.s    482 | Code        | 11 |         |    3 | 00/434C : AD 54 44    |                lda     refW           ; set ref
-  541 |  1  k.s    483 | Code        | 11 |         |    3 | 00/434F : 8D 5E 44    |                sta     refWW          ; for writing
-  542 |  1  k.s    484 | Comment     | 11 |         |    0 | 00/4352               | *
-  543 |  1  k.s    485 | Code        | 11 |         |    3 | 00/4352 : 20 00 BF    |                jsr     {$BF00}        ; re OPEN file to encrypt
-  544 |  1  k.s    486 | Data        | 11 |         |    1 | 00/4355 : C8          |                dfb     {$C8}          
-  545 |  1  k.s    487 | Data        | 11 |         |    2 | 00/4356 : 49 44       |                da      c8_parms       
-  546 |  1  k.s    488 | Code        | 11 |         |    2 | 00/4358 : 90 03       |                bcc     readf          
-  547 |  1  k.s    489 | Code        | 11 |         |    3 | 00/435A : 4C BC 42    |                jmp     doerr          
-  548 |  1  k.s    490 | Code        | 11 |         |    3 | 00/435D : 20 A0 43    | readf          jsr     RW             
-  549 |  1  k.s    491 | Comment     | 11 |         |    0 | 00/4360               | * bcs ... error !!! XXXXXXXXXXXX
-  550 |  1  k.s    492 | Empty       | 11 |         |    0 | 00/4360               |                                       
-  551 |  1  k.s    493 | Code        | 11 |         |    2 | 00/4360 : A9 10       | outenc         lda     #$10           
-  552 |  1  k.s    494 | Code        | 11 |         |    2 | 00/4362 : 85 25       |                sta     {$25}          
-  553 |  1  k.s    495 | Code        | 11 |         |    3 | 00/4364 : 20 22 FC    |                jsr     {$FC22}        
-  554 |  1  k.s    496 | Code        | 11 |         |    2 | 00/4367 : A9 00       |                lda     #$00           
-  555 |  1  k.s    497 | Code        | 11 |         |    2 | 00/4369 : 85 24       |                sta     {$24}          
-  556 |  1  k.s    498 | Code        | 11 |         |    3 | 00/436B : 20 42 FC    |                jsr     {$FC42}        
-  557 |  1  k.s    499 | Macro       | 11 |         |    0 | 00/436E               |                closef  #$00           
-  558 |  1  k.s    499 | Code        | 11 |         |    2 | 00/436E : A9 00       |                lda     #$00           
-  559 |  1  k.s    499 | Code        | 11 |         |    3 | 00/4370 : 8D 66 44    |                sta     cc_parms+1     
-  560 |  1  k.s    499 | Code        | 11 |         |    3 | 00/4373 : 20 00 BF    |                jsr     {$BF00}        
-  561 |  1  k.s    499 | Data        | 11 |         |    1 | 00/4376 : CC          |                dfb     {$CC}          
-  562 |  1  k.s    499 | Data        | 11 |         |    2 | 00/4377 : 65 44       |                da      cc_parms       
-  563 |  1  k.s    500 | Code        | 11 |         |    1 | 00/4379 : 60          |                rts                    
-  564 |  1  k.s    501 | Empty       | 11 |         |    0 | 00/437A               |                                       
-  565 |  1  k.s    502 | Code        | 11 |         |    1 | 00/437A : EA          | Decrypt        nop                    
-  566 |  1  k.s    503 | Code        | 11 |         |    1 | 00/437B : 60          |                rts                    
-  567 |  1  k.s    504 | Empty       | 11 |         |    0 | 00/437C               |                                       
-  568 |  1  k.s    505 | Comment     | 11 |         |    0 | 00/437C               | *
-  569 |  1  k.s    506 | Code        | 11 |         |    3 | 00/437C : AC 67 44    | MovefileName   ldy     fname          ; filename ==> filename.K
-  570 |  1  k.s    507 | Code        | 11 |         |    2 | 00/437F : A2 00       |                ldx     #$00           
-  571 |  1  k.s    508 | Code        | 11 |         |    3 | 00/4381 : BD 68 44    | movefn         lda     fname+1,x      
-  572 |  1  k.s    509 | Code        | 11 |         |    3 | 00/4384 : 9D A9 44    |                sta     fnameW+1,x     
-  573 |  1  k.s    510 | Code        | 11 |         |    1 | 00/4387 : E8          |                inx                    
-  574 |  1  k.s    511 | Code        | 11 |         |    1 | 00/4388 : 88          |                dey                    
-  575 |  1  k.s    512 | Code        | 11 |         |    2 | 00/4389 : D0 F6       |                bne     movefn         
-  576 |  1  k.s    513 | Code        | 11 |         |    2 | 00/438B : A9 AE       |                lda     #"."           
-  577 |  1  k.s    514 | Code        | 11 |         |    3 | 00/438D : 9D A9 44    |                sta     fnameW+1,x     
-  578 |  1  k.s    515 | Code        | 11 |         |    1 | 00/4390 : E8          |                inx                    
-  579 |  1  k.s    516 | Code        | 11 |         |    2 | 00/4391 : A9 CB       |                lda     #"K"           
-  580 |  1  k.s    517 | Code        | 11 |         |    3 | 00/4393 : 9D A9 44    |                sta     fnameW+1,x     
-  581 |  1  k.s    518 | Code        | 11 |         |    3 | 00/4396 : AD 67 44    |                lda     fname          
-  582 |  1  k.s    519 | Code        | 11 |         |    1 | 00/4399 : 18          |                clc                    
-  583 |  1  k.s    520 | Code        | 11 |         |    2 | 00/439A : 69 02       |                adc     #$02           
-  584 |  1  k.s    521 | Code        | 11 |         |    3 | 00/439C : 8D A8 44    |                sta     fnameW         
-  585 |  1  k.s    522 | Code        | 11 |         |    1 | 00/439F : 60          |                rts                    
-  586 |  1  k.s    523 | Comment     | 11 |         |    0 | 00/43A0               | *
-  587 |  1  k.s    524 | Code        | 11 |         |    1 | 00/43A0 : EA          | RW             nop                    ; read, encrypt, write
-  588 |  1  k.s    525 | Code        | 11 |         |    3 | 00/43A1 : AD 4E 44    |                lda     ref            
-  589 |  1  k.s    526 | Code        | 11 |         |    3 | 00/43A4 : 8D 56 44    |                sta     ca_parms+1     ; ref. of file to read
-  590 |  1  k.s    527 | Code        | 11 |         |    3 | 00/43A7 : 20 00 BF    |                jsr     {$BF00}        ; READ 256 bytes
-  591 |  1  k.s    528 | Data        | 11 |         |    1 | 00/43AA : CA          |                dfb     {$CA}          
-  592 |  1  k.s    529 | Data        | 11 |         |    2 | 00/43AB : 55 44       |                da      ca_parms       
-  593 |  1  k.s    530 | Code        | 11 |         |    2 | 00/43AD : C9 4C       |                cmp     #$4C           ; end of file ?
-  594 |  1  k.s    531 | Code        | 11 |         |    2 | 00/43AF : F0 02       |                beq     RWex           ; yes : return
-  595 |  1  k.s    532 | Code        | 11 |         |    2 | 00/43B1 : 90 01       |                bcc     rw2            ; no (and no error)
-  596 |  1  k.s    533 | Code        | 11 |         |    1 | 00/43B3 : 60          | RWex           rts                    ; exit if end of file or error
-  597 |  1  k.s    534 | Empty       | 11 |         |    0 | 00/43B4               |                                       
-  598 |  1  k.s    535 | Code        | 11 |         |    1 | 00/43B4 : EA          | rw2            nop                    
-  599 |  1  k.s    536 | Code        | 11 |         |    3 | 00/43B5 : 20 C3 43    |                jsr     docode         
-  600 |  1  k.s    537 | Code        | 11 |         |    3 | 00/43B8 : 20 00 BF    |                jsr     {$BF00}        ; WRITE 256 bytes
-  601 |  1  k.s    538 | Data        | 11 |         |    1 | 00/43BB : CB          |                dfb     {$CB}          
-  602 |  1  k.s    539 | Data        | 11 |         |    2 | 00/43BC : 5D 44       |                da      cb_parms       
-  603 |  1  k.s    540 | Code        | 11 |         |    2 | 00/43BE : B0 F3       |                bcs     RWex           
-  604 |  1  k.s    541 | Code        | 11 |         |    3 | 00/43C0 : 4C A0 43    |                jmp     RW             
-  605 |  1  k.s    542 | Empty       | 11 |         |    0 | 00/43C3               |                                       
-  606 |  1  k.s    543 | Empty       | 11 |         |    0 | 00/43C3               |                                       
-  607 |  1  k.s    544 | Empty       | 11 |         |    0 | 00/43C3               |                                       
-  608 |  1  k.s    545 | Empty       | 11 |         |    0 | 00/43C3               |                                       
-  609 |  1  k.s    546 | Code        | 11 |         |    1 | 00/43C3 : EA          | docode         nop                    ; encrypt file buffer
-  610 |  1  k.s    547 | Code        | 11 |         |    3 | 00/43C4 : AD 5B 44    |                lda     readlen        ; check > 0 bytes read
-  611 |  1  k.s    548 | Code        | 11 |         |    3 | 00/43C7 : 0D 5C 44    |                ora     readlen+1      
-  612 |  1  k.s    549 | Code        | 11 |         |    2 | 00/43CA : F0 63       |                beq     outdocode      ; if 0 : exit
-  613 |  1  k.s    550 | Code        | 11 |         |    2 | 00/43CC : A9 00       |                lda     #$00           ; init. 16 bits counter
-  614 |  1  k.s    551 | Code        | 11 |         |    3 | 00/43CE : 8D 02 45    |                sta     cpt16          
-  615 |  1  k.s    552 | Code        | 11 |         |    3 | 00/43D1 : 8D 03 45    |                sta     cpt16+1        
-  616 |  1  k.s    553 | Comment     | 11 |         |    0 | 00/43D4               | *
-  617 |  1  k.s    554 | Code        | 11 |         |    3 | 00/43D4 : AD 00 5A    | charge         lda     {$5A00}        ; read byte in buffer
-  618 |  1  k.s    555 | Code        | 11 |         |    1 | 00/43D7 : 48          |                pha                    ; save it
-  619 |  1  k.s    556 | Code        | 11 |         |    3 | 00/43D8 : AE 01 45    | code           ldx     secretp        ; get position in secret
-  620 |  1  k.s    557 | Code        | 11 |         |    3 | 00/43DB : BD F5 44    |                lda     secret,x       ; get secret byte
-  621 |  1  k.s    558 | Code        | 11 |         |    3 | 00/43DE : 8D 04 45    |                sta     eorval         ; store it for later eor
-  622 |  1  k.s    559 | Code        | 11 |         |    2 | 00/43E1 : D0 06       |                bne     cod2           ; end of secret not reached
-  623 |  1  k.s    560 | Code        | 11 |         |    3 | 00/43E3 : 8D 01 45    |                sta     secretp        ; end of secret reached : pos = 0
-  624 |  1  k.s    561 | Code        | 11 |         |    3 | 00/43E6 : 4C D8 43    |                jmp     code           ; reload secret byte
-  625 |  1  k.s    562 | Code        | 11 |         |    1 | 00/43E9 : 68          | cod2           pla                    ; pop byte read
-  626 |  1  k.s    563 | Code        | 11 |         |    3 | 00/43EA : EE 01 45    |                inc     secretp        ; next byte in secret
-  627 |  1  k.s    564 | Code        | 11 |         |    3 | 00/43ED : 4D 04 45    |                eor     eorval         ; encrypt !!
-  628 |  1  k.s    565 | Code        | 11 |         |    3 | 00/43F0 : 8D 00 5C    | doout          sta     {$5C00}        ; stoe in buffer to write
-  629 |  1  k.s    566 | Macro       | 11 |         |    0 | 00/43F3               |                m_inc   cpt16          ; counter +=2
-  630 |  1  k.s    566 | Code        | 11 |         |    3 | 00/43F3 : EE 02 45    |                inc     cpt16          ; usually a pointer
-  631 |  1  k.s    566 | Code        | 11 |         |    2 | 00/43F6 : D0 03       |                bne     ozunid_33      
-  632 |  1  k.s    566 | Code        | 11 |         |    3 | 00/43F8 : EE 03 45    |                inc     cpt16+1        
-  633 |  1  k.s    566 | Empty       | 11 |         |    0 | 00/43FB               | ozunid_33                             
-  634 |  1  k.s    567 | Macro       | 11 |         |    0 | 00/43FB               | selfmod        m_inc   charge+1       ; self modify load address
-  635 |  1  k.s    567 | Code        | 11 |         |    3 | 00/43FB : EE D5 43    |                inc     charge+1       ; usually a pointer
-  636 |  1  k.s    567 | Code        | 11 |         |    2 | 00/43FE : D0 03       |                bne     ozunid_34      
-  637 |  1  k.s    567 | Code        | 11 |         |    3 | 00/4400 : EE D6 43    |                inc     charge+1+1     
-  638 |  1  k.s    567 | Empty       | 11 |         |    0 | 00/4403               | ozunid_34                             
-  639 |  1  k.s    568 | Macro       | 11 |         |    0 | 00/4403               | self2          m_inc   doout+1        ; self modify store address
-  640 |  1  k.s    568 | Code        | 11 |         |    3 | 00/4403 : EE F1 43    |                inc     doout+1        ; usually a pointer
-  641 |  1  k.s    568 | Code        | 11 |         |    2 | 00/4406 : D0 03       |                bne     ozunid_35      
-  642 |  1  k.s    568 | Code        | 11 |         |    3 | 00/4408 : EE F2 43    |                inc     doout+1+1      
-  643 |  1  k.s    568 | Empty       | 11 |         |    0 | 00/440B               | ozunid_35                             
-  644 |  1  k.s    569 | Code        | 11 |         |    3 | 00/440B : AD 02 45    | compar         lda     cpt16          ; compare counter
-  645 |  1  k.s    570 | Code        | 11 |         |    3 | 00/440E : CD 5B 44    |                cmp     readlen        ; with bytes read
-  646 |  1  k.s    571 | Code        | 11 |         |    2 | 00/4411 : D0 C1       |                bne     charge         
-  647 |  1  k.s    572 | Code        | 11 |         |    3 | 00/4413 : AD 03 45    |                lda     cpt16+1        
-  648 |  1  k.s    573 | Code        | 11 |         |    3 | 00/4416 : CD 5C 44    |                cmp     readlen+1      
-  649 |  1  k.s    574 | Code        | 11 |         |    2 | 00/4419 : D0 B9       |                bne     charge         ; loop if counter <> bytes read
-  650 |  1  k.s    575 | Comment     | 11 |         |    0 | 00/441B               | *
-  651 |  1  k.s    576 | Code        | 11 |         |    2 | 00/441B : A9 00       |                lda     #<{$5A00}      ; restore buffers adress
-  652 |  1  k.s    577 | Code        | 11 |         |    3 | 00/441D : 8D D5 43    |                sta     charge+1       
-  653 |  1  k.s    578 | Code        | 11 |         |    2 | 00/4420 : A9 5A       |                lda     #>{$5A00}      
-  654 |  1  k.s    579 | Code        | 11 |         |    3 | 00/4422 : 8D D6 43    |                sta     charge+2       
-  655 |  1  k.s    580 | Code        | 11 |         |    2 | 00/4425 : A9 00       |                lda     #<{$5C00}      
-  656 |  1  k.s    581 | Code        | 11 |         |    3 | 00/4427 : 8D F1 43    |                sta     doout+1        
-  657 |  1  k.s    582 | Code        | 11 |         |    2 | 00/442A : A9 5C       |                lda     #>{$5C00}      
-  658 |  1  k.s    583 | Code        | 11 |         |    3 | 00/442C : 8D F2 43    |                sta     doout+2        
-  659 |  1  k.s    584 | Code        | 11 |         |    1 | 00/442F : 60          | outdocode      rts                    
-  660 |  1  k.s    585 | Empty       | 11 |         |    0 | 00/4430               |                                       
-  661 |  1  k.s    586 | Comment     | 11 |         |    0 | 00/4430               | *
-  662 |  1  k.s    587 | Comment     | 11 |         |    0 | 00/4430               | **********************************       
-  663 |  1  k.s    588 | Comment     | 11 |         |    0 | 00/4430               | *              DATA              *
-  664 |  1  k.s    589 | Comment     | 11 |         |    0 | 00/4430               | ********************************** 
-  665 |  1  k.s    590 | Empty       | 11 |         |    0 | 00/4430               | c0_parms                              ; create file
-  666 |  1  k.s    591 | Data        | 11 |         |    1 | 00/4430 : 07          |                hex     07             
-  667 |  1  k.s    592 | Data        | 11 |         |    2 | 00/4431 : A8 44       |                da      fnameW         ; file name
-  668 |  1  k.s    593 | Data        | 11 |         |    1 | 00/4433 : C3          |                hex     C3             ; access bits
-  669 |  1  k.s    594 | Data        | 11 |         |    1 | 00/4434 : 06          |                hex     06             ; file type = BIN
-  670 |  1  k.s    595 | Data        | 11 |         |    2 | 00/4435 : 00 00       |                hex     0000           ; aux file type
-  671 |  1  k.s    596 | Data        | 11 |         |    1 | 00/4437 : 01          |                hex     01             ; storage type
-  672 |  1  k.s    597 | Data        | 11 |         |    2 | 00/4438 : 00 00       |                hex     0000           ; date
-  673 |  1  k.s    598 | Data        | 11 |         |    2 | 00/443A : 00 00       |                hex     0000           ; time
-  674 |  1  k.s    599 | Empty       | 11 |         |    0 | 00/443C               |                                       
-  675 |  1  k.s    600 | Empty       | 11 |         |    0 | 00/443C               | c1_params                             ; destroy file
-  676 |  1  k.s    601 | Data        | 11 |         |    1 | 00/443C : 01          |                hex     01             
-  677 |  1  k.s    602 | Data        | 11 |         |    2 | 00/443D : A8 44       |                da      fnameW         ; file name
-  678 |  1  k.s    603 | Empty       | 11 |         |    0 | 00/443F               |                                       
-  679 |  1  k.s    604 | Empty       | 11 |         |    0 | 00/443F               | c5_parms                              ; online
-  680 |  1  k.s    605 | Data        | 11 |         |    1 | 00/443F : 02          |                hex     02             
-  681 |  1  k.s    606 | Data        | 11 |         |    1 | 00/4440 : 00          |                hex     00             
-  682 |  1  k.s    607 | Data        | 11 |         |    2 | 00/4441 : 00 50       |                da      {$5000}        
-  683 |  1  k.s    608 | Empty       | 11 |         |    0 | 00/4443               |                                       
-  684 |  1  k.s    609 | Empty       | 11 |         |    0 | 00/4443               | c6_parms                              ; set_prefix
-  685 |  1  k.s    610 | Data        | 11 |         |    1 | 00/4443 : 01          |                hex     01             
-  686 |  1  k.s    611 | Data        | 11 |         |    2 | 00/4444 : 00 50       |                da      {$5000}        
-  687 |  1  k.s    612 | Empty       | 11 |         |    0 | 00/4446               |                                       
-  688 |  1  k.s    613 | Empty       | 11 |         |    0 | 00/4446               |                                       
-  689 |  1  k.s    614 | Empty       | 11 |         |    0 | 00/4446               | c7_parms                              ; get_prefix
-  690 |  1  k.s    615 | Data        | 11 |         |    1 | 00/4446 : 01          |                hex     01             
-  691 |  1  k.s    616 | Data        | 11 |         |    2 | 00/4447 : 00 50       |                da      {$5000}        
-  692 |  1  k.s    617 | Empty       | 11 |         |    0 | 00/4449               |                                       
-  693 |  1  k.s    618 | Empty       | 11 |         |    0 | 00/4449               | c8_parms                              ; open file for reading
-  694 |  1  k.s    619 | Data        | 11 |         |    1 | 00/4449 : 03          |                hex     03             
-  695 |  1  k.s    620 | Data        | 11 |         |    2 | 00/444A : 67 44       |                da      fname          
-  696 |  1  k.s    621 | Data        | 11 |         |    2 | 00/444C : 00 51       |                da      {$5100}        
-  697 |  1  k.s    622 | Data        | 11 |         |    1 | 00/444E : 00          | ref            hex     00             
-  698 |  1  k.s    623 | Empty       | 11 |         |    0 | 00/444F               |                                       
-  699 |  1  k.s    624 | Empty       | 11 |         |    0 | 00/444F               | c8_parmsW                             ; open file for writing
-  700 |  1  k.s    625 | Data        | 11 |         |    1 | 00/444F : 03          |                hex     03             
-  701 |  1  k.s    626 | Data        | 11 |         |    2 | 00/4450 : A8 44       |                da      fnameW         
-  702 |  1  k.s    627 | Data        | 11 |         |    2 | 00/4452 : 00 56       |                da      {$5600}        
-  703 |  1  k.s    628 | Data        | 11 |         |    1 | 00/4454 : 00          | refW           hex     00             
-  704 |  1  k.s    629 | Empty       | 11 |         |    0 | 00/4455               |                                       
-  705 |  1  k.s    630 | Empty       | 11 |         |    0 | 00/4455               | ca_parms                              ; read file
-  706 |  1  k.s    631 | Data        | 11 |         |    1 | 00/4455 : 04          |                hex     04             ; number of params.
-  707 |  1  k.s    632 | Data        | 11 |         |    1 | 00/4456 : 00          |                hex     00             ; ref #
-  708 |  1  k.s    633 | Data        | 11 |         |    2 | 00/4457 : 00 5A       |                da      {$5A00}        
-  709 |  1  k.s    634 | Data        | 11 |         |    2 | 00/4459 : 00 01       |                hex     0001           ; 256 b. requested
-  710 |  1  k.s    635 | Data        | 11 |         |    2 | 00/445B : 00 00       | readlen        hex     0000           ; b. read
-  711 |  1  k.s    636 | Empty       | 11 |         |    0 | 00/445D               |                                       
-  712 |  1  k.s    637 | Empty       | 11 |         |    0 | 00/445D               | cb_parms                              ; write file
-  713 |  1  k.s    638 | Data        | 11 |         |    1 | 00/445D : 04          |                hex     04             
-  714 |  1  k.s    639 | Data        | 11 |         |    1 | 00/445E : 00          | refWW          hex     00             ; file reference
-  715 |  1  k.s    640 | Data        | 11 |         |    2 | 00/445F : 00 5C       |                da      {$5C00}        ; buffer for data to be written
-  716 |  1  k.s    641 | Data        | 11 |         |    2 | 00/4461 : 00 01       | reql           hex     0001           ; 256 b. requested
-  717 |  1  k.s    642 | Data        | 11 |         |    2 | 00/4463 : 00 00       | actl           hex     0000           ; number of byte written
-  718 |  1  k.s    643 | Empty       | 11 |         |    0 | 00/4465               |                                       
-  719 |  1  k.s    644 | Empty       | 11 |         |    0 | 00/4465               |                                       
-  720 |  1  k.s    645 | Empty       | 11 |         |    0 | 00/4465               | cc_parms                              ; close file
-  721 |  1  k.s    646 | Data        | 11 |         |    1 | 00/4465 : 01          |                hex     01             
-  722 |  1  k.s    647 | Data        | 11 |         |    1 | 00/4466 : 00          |                hex     00             
-  723 |  1  k.s    648 | Empty       | 11 |         |    0 | 00/4467               |                                       
-  724 |  1  k.s    649 | Data        | 11 |         |   65 | 00/4467 : 00 00 00 00 | fname          ds      65,0           
+   71 |  1  k.s    184 | Directive   | 11 |         |    0 | 00/8000               |                FIN                    
+   72 |  1  k.s    185 | Comment     | 11 |         |    0 | 00/8000               | *
+   73 |  1  k.s    186 | Comment     | 11 |         |    0 | 00/8000               | * * * * * * * * * *
+   74 |  1  k.s    187 | Comment     | 11 |         |    0 | 00/8000               | *    PROGRAMME    *
+   75 |  1  k.s    188 | Comment     | 11 |         |    0 | 00/8000               | * * * * * * * * * *
+   76 |  1  k.s    189 | Comment     | 11 |         |    0 | 00/8000               | *
+   77 |  1  k.s    190 | Directive   | 11 |         |    0 | 00/8000               |                ORG     $4000          
+   78 |  1  k.s    191 | Code        | 11 |         |    1 | 00/4000 : EA          | main           nop                    
+   79 |  1  k.s    192 | Comment     | 11 |         |    0 | 00/4001               | * init
+   80 |  1  k.s    193 | Code        | 11 |         |    3 | 00/4001 : 20 2F FB    |                jsr     {$FB2F}        
+   81 |  1  k.s    194 | Code        | 11 |         |    3 | 00/4004 : 20 58 FC    |                jsr     {$FC58}        
+   82 |  1  k.s    195 | Code        | 11 |         |    3 | 00/4007 : 8D 0C C0    |                sta     {$C00C}        ; 40 col.
+   83 |  1  k.s    196 | Macro       | 11 |         |    0 | 00/400A               |                closef  #$00           ; close all files
+   84 |  1  k.s    196 | Code        | 11 |         |    2 | 00/400A : A9 00       |                lda     #$00           
+   85 |  1  k.s    196 | Code        | 11 |         |    3 | 00/400C : 8D 19 45    |                sta     cc_parms+1     
+   86 |  1  k.s    196 | Code        | 11 |         |    3 | 00/400F : 20 00 BF    |                jsr     {$BF00}        
+   87 |  1  k.s    196 | Data        | 11 |         |    1 | 00/4012 : CC          |                dfb     {$CC}          
+   88 |  1  k.s    196 | Data        | 11 |         |    2 | 00/4013 : 18 45       |                da      cc_parms       
+   89 |  1  k.s    197 | Comment     | 11 |         |    0 | 00/4015               | *
+   90 |  1  k.s    198 | Code        | 11 |         |    3 | 00/4015 : 20 22 40    |                jsr     GetPF          
+   91 |  1  k.s    199 | Code        | 11 |         |    3 | 00/4018 : 20 27 40    |                jsr     ShowPF         
+   92 |  1  k.s    200 | Code        | 11 |         |    3 | 00/401B : 20 5E 40    |                jsr     ShowMenu       
+   93 |  1  k.s    201 | Code        | 11 |         |    3 | 00/401E : 20 6B 40    |                jsr     MenuLoop       
+   94 |  1  k.s    202 | Code        | 11 |         |    1 | 00/4021 : 60          |                rts                    
+   95 |  1  k.s    203 | Empty       | 11 |         |    0 | 00/4022               |                                       
+   96 |  1  k.s    204 | Code        | 11 |         |    1 | 00/4022 : EA          | GetPF          nop                    
+   97 |  1  k.s    205 | Code        | 11 |         |    3 | 00/4023 : 20 42 41    |                jsr     DoPrefix       
+   98 |  1  k.s    206 | Code        | 11 |         |    1 | 00/4026 : 60          |                rts                    
+   99 |  1  k.s    207 | Empty       | 11 |         |    0 | 00/4027               |                                       
+  100 |  1  k.s    208 | Code        | 11 |         |    1 | 00/4027 : EA          | ShowPF         nop                    
+  101 |  1  k.s    209 | Macro       | 11 |         |    0 | 00/4028               |                gotoXY  0;0            
+  102 |  1  k.s    209 | Code        | 11 |         |    2 | 00/4028 : A9 00       |                lda     #0             
+  103 |  1  k.s    209 | Code        | 11 |         |    2 | 00/402A : 85 24       |                sta     {$24}          ; horizontal
+  104 |  1  k.s    209 | Code        | 11 |         |    2 | 00/402C : A9 00       |                lda     #0             
+  105 |  1  k.s    209 | Code        | 11 |         |    2 | 00/402E : 85 25       |                sta     {$25}          
+  106 |  1  k.s    209 | Code        | 11 |         |    3 | 00/4030 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  107 |  1  k.s    209 | Code        | 11 |         |    3 | 00/4033 : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  108 |  1  k.s    210 | Macro       | 11 |         |    0 | 00/4036               |                prnstr  {$5000}        
+  109 |  1  k.s    210 | Code        | 11 |         |    3 | 00/4036 : AC 00 50    |                ldy     {$5000}        
+  110 |  1  k.s    210 | Code        | 11 |         |    2 | 00/4039 : F0 0E       |                beq     ozunid_5       ; no char.
+  111 |  1  k.s    210 | Code        | 11 |         |    2 | 00/403B : A2 00       |                ldx     #$00           
+  112 |  1  k.s    210 | Code        | 11 |         |    3 | 00/403D : BD 01 50    | ozunid_4       lda     {$5000}+1,X    
+  113 |  1  k.s    210 | Code        | 11 |         |    2 | 00/4040 : 09 80       |                ora     #$80           
+  114 |  1  k.s    210 | Code        | 11 |         |    3 | 00/4042 : 20 ED FD    |                jsr     {$FDED}        
+  115 |  1  k.s    210 | Code        | 11 |         |    1 | 00/4045 : E8          |                inx                    
+  116 |  1  k.s    210 | Code        | 11 |         |    1 | 00/4046 : 88          |                dey                    
+  117 |  1  k.s    210 | Code        | 11 |         |    2 | 00/4047 : D0 F4       |                bne     ozunid_4       
+  118 |  1  k.s    210 | Empty       | 11 |         |    0 | 00/4049               | ozunid_5                              
+  119 |  1  k.s    211 | Code        | 11 |         |    3 | 00/4049 : AE 00 50    |                ldx     {$5000}        
+  120 |  1  k.s    212 | Code        | 11 |         |    3 | 00/404C : BD 00 50    |                lda     {$5000},x      
+  121 |  1  k.s    213 | Code        | 11 |         |    2 | 00/404F : C9 2F       |                cmp     #$2F           ; /
+  122 |  1  k.s    214 | Code        | 11 |         |    2 | 00/4051 : F0 05       |                beq     spfend         
+  123 |  1  k.s    215 | Code        | 11 |         |    2 | 00/4053 : A9 AF       |                lda     #"/"           
+  124 |  1  k.s    216 | Code        | 11 |         |    3 | 00/4055 : 20 ED FD    |                jsr     {$FDED}        
+  125 |  1  k.s    217 | Macro       | 11 |         |    0 | 00/4058               | spfend         cr                     
+  126 |  1  k.s    217 | Code        | 11 |         |    2 | 00/4058 : A9 8D       |                lda     #$8D           
+  127 |  1  k.s    217 | Code        | 11 |         |    3 | 00/405A : 20 ED FD    |                jsr     {$FDED}        
+  128 |  1  k.s    218 | Code        | 11 |         |    1 | 00/405D : 60          |                rts                    
+  129 |  1  k.s    219 | Empty       | 11 |         |    0 | 00/405E               |                                       
+  130 |  1  k.s    220 | Code        | 11 |         |    1 | 00/405E : EA          | ShowMenu       nop                    
+  131 |  1  k.s    221 | Code        | 11 |         |    3 | 00/405F : 20 D1 40    |                jsr     title          ; display prog. title
+  132 |  1  k.s    222 | Code        | 11 |         |    2 | 00/4062 : A9 01       |                lda     #$01           ; fist item highlighted
+  133 |  1  k.s    223 | Code        | 11 |         |    3 | 00/4064 : 8D 33 46    |                sta     curm           
+  134 |  1  k.s    224 | Code        | 11 |         |    3 | 00/4067 : 20 82 41    |                jsr     dispmenu       
+  135 |  1  k.s    225 | Code        | 11 |         |    1 | 00/406A : 60          |                rts                    
+  136 |  1  k.s    226 | Empty       | 11 |         |    0 | 00/406B               |                                       
+  137 |  1  k.s    227 | Code        | 11 |         |    1 | 00/406B : EA          | MenuLoop       nop                    
+  138 |  1  k.s    228 | Code        | 11 |         |    3 | 00/406C : 2C 10 C0    | readkey        bit     {$C010}        ; Clear out any data that is already at KBD
+  139 |  1  k.s    229 | Code        | 11 |         |    3 | 00/406F : 2C 00 C0    | keyloop        bit     {$C000}        
+  140 |  1  k.s    230 | Code        | 11 |         |    2 | 00/4072 : 10 FB       |                bpl     keyloop        
+  141 |  1  k.s    231 | Code        | 11 |         |    3 | 00/4074 : AD 00 C0    |                lda     {$C000}        ; get data (in case)
+  142 |  1  k.s    232 | Comment     | 11 |         |    0 | 00/4077               | *
+  143 |  1  k.s    233 | Code        | 11 |         |    2 | 00/4077 : C9 8A       |                cmp     #$8A           ; down arrow key ?
+  144 |  1  k.s    234 | Code        | 11 |         |    2 | 00/4079 : F0 02       |                beq     donext         
+  145 |  1  k.s    235 | Code        | 11 |         |    2 | 00/407B : D0 12       |                bne     nextk0         
+  146 |  1  k.s    236 | Code        | 11 |         |    3 | 00/407D : EE 33 46    | donext         inc     curm           ; next nemu item
+  147 |  1  k.s    237 | Code        | 11 |         |    3 | 00/4080 : AD 33 46    |                lda     curm           
+  148 |  1  k.s    238 | Code        | 11 |         |    2 | 00/4083 : C9 05       |                cmp     #{$04}+1       ; last item reached ?
+  149 |  1  k.s    239 | Code        | 11 |         |    2 | 00/4085 : D0 43       |                bne     doloop         ; no
+  150 |  1  k.s    240 | Code        | 11 |         |    2 | 00/4087 : A9 01       |                lda     #$01           ; yes : reset current highlighted mnu item
+  151 |  1  k.s    241 | Code        | 11 |         |    3 | 00/4089 : 8D 33 46    |                sta     curm           
+  152 |  1  k.s    242 | Code        | 11 |         |    3 | 00/408C : 4C CA 40    |                jmp     doloop         
+  153 |  1  k.s    243 | Code        | 11 |         |    2 | 00/408F : C9 95       | nextk0         cmp     #$95           
+  154 |  1  k.s    244 | Code        | 11 |         |    2 | 00/4091 : D0 03       |                bne     nextk1         
+  155 |  1  k.s    245 | Code        | 11 |         |    3 | 00/4093 : 4C 7D 40    |                jmp     donext         
+  156 |  1  k.s    246 | Comment     | 11 |         |    0 | 00/4096               | *
+  157 |  1  k.s    247 | Code        | 11 |         |    1 | 00/4096 : EA          | nextk1         nop                    
+  158 |  1  k.s    248 | Code        | 11 |         |    2 | 00/4097 : C9 8B       |                cmp     #$8B           ; up arrow key ?
+  159 |  1  k.s    249 | Code        | 11 |         |    2 | 00/4099 : F0 02       |                beq     doprev         
+  160 |  1  k.s    250 | Code        | 11 |         |    2 | 00/409B : D0 0D       |                bne     nextk2         
+  161 |  1  k.s    251 | Code        | 11 |         |    3 | 00/409D : CE 33 46    | doprev         dec     curm           
+  162 |  1  k.s    252 | Code        | 11 |         |    2 | 00/40A0 : D0 28       |                bne     doloop         
+  163 |  1  k.s    253 | Code        | 11 |         |    2 | 00/40A2 : A9 04       |                lda     #{$04}         
+  164 |  1  k.s    254 | Code        | 11 |         |    3 | 00/40A4 : 8D 33 46    |                sta     curm           
+  165 |  1  k.s    255 | Code        | 11 |         |    3 | 00/40A7 : 4C CA 40    |                jmp     doloop         
+  166 |  1  k.s    256 | Code        | 11 |         |    2 | 00/40AA : C9 88       | nextk2         cmp     #$88           
+  167 |  1  k.s    257 | Code        | 11 |         |    2 | 00/40AC : D0 03       |                bne     nextk3         
+  168 |  1  k.s    258 | Code        | 11 |         |    3 | 00/40AE : 4C 9D 40    |                jmp     doprev         
+  169 |  1  k.s    259 | Empty       | 11 |         |    0 | 00/40B1               |                                       
+  170 |  1  k.s    260 | Code        | 11 |         |    1 | 00/40B1 : EA          | nextk3         nop                    
+  171 |  1  k.s    261 | Code        | 11 |         |    2 | 00/40B2 : C9 8D       |                cmp     #$8D           ; return key ?
+  172 |  1  k.s    262 | Code        | 11 |         |    2 | 00/40B4 : D0 14       |                bne     doloop         
+  173 |  1  k.s    263 | Code        | 11 |         |    3 | 00/40B6 : 20 F3 41    |                jsr     docom          ; execute user choice
+  174 |  1  k.s    264 | Code        | 11 |         |    3 | 00/40B9 : AD C5 45    |                lda     quit           
+  175 |  1  k.s    265 | Code        | 11 |         |    2 | 00/40BC : F0 0C       |                beq     doloop         
+  176 |  1  k.s    266 | Macro       | 11 |         |    0 | 00/40BE               |                closef  #$00           ; close all files
+  177 |  1  k.s    266 | Code        | 11 |         |    2 | 00/40BE : A9 00       |                lda     #$00           
+  178 |  1  k.s    266 | Code        | 11 |         |    3 | 00/40C0 : 8D 19 45    |                sta     cc_parms+1     
+  179 |  1  k.s    266 | Code        | 11 |         |    3 | 00/40C3 : 20 00 BF    |                jsr     {$BF00}        
+  180 |  1  k.s    266 | Data        | 11 |         |    1 | 00/40C6 : CC          |                dfb     {$CC}          
+  181 |  1  k.s    266 | Data        | 11 |         |    2 | 00/40C7 : 18 45       |                da      cc_parms       
+  182 |  1  k.s    267 | Code        | 11 |         |    1 | 00/40C9 : 60          |                rts                    ; >>> END <<<
+  183 |  1  k.s    268 | Comment     | 11 |         |    0 | 00/40CA               | *
+  184 |  1  k.s    269 | Code        | 11 |         |    3 | 00/40CA : 20 82 41    | doloop         jsr     dispmenu       
+  185 |  1  k.s    270 | Code        | 11 |         |    3 | 00/40CD : 4C 6C 40    |                jmp     readkey        
+  186 |  1  k.s    271 | Code        | 11 |         |    1 | 00/40D0 : 60          |                rts                    
+  187 |  1  k.s    272 | Comment     | 11 |         |    0 | 00/40D1               | *
+  188 |  1  k.s    273 | Comment     | 11 |         |    0 | 00/40D1               | *  TITLE
+  189 |  1  k.s    274 | Comment     | 11 |         |    0 | 00/40D1               | *
+  190 |  1  k.s    275 | Macro       | 11 |         |    0 | 00/40D1               | title          gotoXY  0;1            
+  191 |  1  k.s    275 | Code        | 11 |         |    2 | 00/40D1 : A9 00       |                lda     #0             
+  192 |  1  k.s    275 | Code        | 11 |         |    2 | 00/40D3 : 85 24       |                sta     {$24}          ; horizontal
+  193 |  1  k.s    275 | Code        | 11 |         |    2 | 00/40D5 : A9 01       |                lda     #1             
+  194 |  1  k.s    275 | Code        | 11 |         |    2 | 00/40D7 : 85 25       |                sta     {$25}          
+  195 |  1  k.s    275 | Code        | 11 |         |    3 | 00/40D9 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  196 |  1  k.s    275 | Code        | 11 |         |    3 | 00/40DC : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  197 |  1  k.s    276 | Code        | 11 |         |    2 | 00/40DF : A2 28       |                ldx     #$28           ; 40 col.
+  198 |  1  k.s    277 | Code        | 11 |         |    2 | 00/40E1 : A9 AD       | dotitle        lda     #"-"           ; --- line 1
+  199 |  1  k.s    278 | Code        | 11 |         |    3 | 00/40E3 : 20 ED FD    | ozunid_1       jsr     {$FDED}        
+  200 |  1  k.s    279 | Code        | 11 |         |    1 | 00/40E6 : CA          |                dex                    
+  201 |  1  k.s    280 | Code        | 11 |         |    2 | 00/40E7 : D0 FA       |                bne     ozunid_1       
+  202 |  1  k.s    281 | Macro       | 11 |         |    0 | 00/40E9               |                gotoXY  0;2            
+  203 |  1  k.s    281 | Code        | 11 |         |    2 | 00/40E9 : A9 00       |                lda     #0             
+  204 |  1  k.s    281 | Code        | 11 |         |    2 | 00/40EB : 85 24       |                sta     {$24}          ; horizontal
+  205 |  1  k.s    281 | Code        | 11 |         |    2 | 00/40ED : A9 02       |                lda     #2             
+  206 |  1  k.s    281 | Code        | 11 |         |    2 | 00/40EF : 85 25       |                sta     {$25}          
+  207 |  1  k.s    281 | Code        | 11 |         |    3 | 00/40F1 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  208 |  1  k.s    281 | Code        | 11 |         |    3 | 00/40F4 : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  209 |  1  k.s    282 | Macro       | 11 |         |    0 | 00/40F7               |                printc  libtit         ; C r y p t o
+  210 |  1  k.s    282 | Code        | 11 |         |    3 | 00/40F7 : 4C FB 40    |                jmp     ozunid_7       
+  211 |  1  k.s    282 | Data        | 11 |         |    1 | 00/40FA : 00          | ozunid_6       hex     00             
+  213 |  1  k.s    282 | Code        | 11 |         |    2 | 00/40FB : A2 00       |                ldx     #$00           
+  214 |  1  k.s    282 | Code        | 11 |         |    3 | 00/40FD : BD 9C 45    | ozunid_9       lda     libtit,x       
+  215 |  1  k.s    282 | Code        | 11 |         |    2 | 00/4100 : F0 04       |                beq     ozunid_10      
+  216 |  1  k.s    282 | Code        | 11 |         |    1 | 00/4102 : E8          |                inx                    
+  217 |  1  k.s    282 | Code        | 11 |         |    3 | 00/4103 : 4C FD 40    |                jmp     ozunid_9       
+  218 |  1  k.s    282 | Empty       | 11 |         |    0 | 00/4106               | ozunid_10                             
+  219 |  1  k.s    282 | Code        | 11 |         |    1 | 00/4106 : 8A          |                txa                    
+  220 |  1  k.s    282 | Code        | 11 |         |    1 | 00/4107 : 4A          |                lsr                    ; / 2
+  221 |  1  k.s    282 | Code        | 11 |         |    3 | 00/4108 : 8D FA 40    |                sta     ozunid_6       
+  222 |  1  k.s    282 | Code        | 11 |         |    2 | 00/410B : A9 14       |                lda     #$14           ; = half line
+  223 |  1  k.s    282 | Code        | 11 |         |    1 | 00/410D : 38          |                sec                    
+  224 |  1  k.s    282 | Code        | 11 |         |    3 | 00/410E : ED FA 40    |                sbc     ozunid_6       
+  225 |  1  k.s    282 | Code        | 11 |         |    1 | 00/4111 : AA          |                tax                    
+  226 |  1  k.s    282 | Code        | 11 |         |    2 | 00/4112 : A9 A0       |                lda     #" "           ; fill with spaces
+  227 |  1  k.s    282 | Code        | 11 |         |    3 | 00/4114 : 20 ED FD    | ozunid_8       jsr     {$FDED}        
+  228 |  1  k.s    282 | Code        | 11 |         |    1 | 00/4117 : CA          |                dex                    
+  229 |  1  k.s    282 | Code        | 11 |         |    2 | 00/4118 : D0 FA       |                bne     ozunid_8       
+  231 |  1  k.s    282 | Code        | 11 |         |    2 | 00/411A : A2 00       |                ldx     #$00           ; in argument
+  232 |  1  k.s    282 | Code        | 11 |         |    3 | 00/411C : BD 9C 45    | ozunid_11      lda     libtit,X       
+  233 |  1  k.s    282 | Code        | 11 |         |    2 | 00/411F : F0 08       |                beq     ozunid_12      
+  234 |  1  k.s    282 | Code        | 11 |         |    2 | 00/4121 : 09 80       |                ora     #$80           
+  235 |  1  k.s    282 | Code        | 11 |         |    3 | 00/4123 : 20 ED FD    |                jsr     {$FDED}        
+  236 |  1  k.s    282 | Code        | 11 |         |    1 | 00/4126 : E8          |                inx                    
+  237 |  1  k.s    282 | Code        | 11 |         |    2 | 00/4127 : 80 F3       |                bra     ozunid_11      
+  238 |  1  k.s    282 | Empty       | 11 |         |    0 | 00/4129               | ozunid_12                             
+  239 |  1  k.s    283 | Macro       | 11 |         |    0 | 00/4129               |                gotoXY  0;3            
+  240 |  1  k.s    283 | Code        | 11 |         |    2 | 00/4129 : A9 00       |                lda     #0             
+  241 |  1  k.s    283 | Code        | 11 |         |    2 | 00/412B : 85 24       |                sta     {$24}          ; horizontal
+  242 |  1  k.s    283 | Code        | 11 |         |    2 | 00/412D : A9 03       |                lda     #3             
+  243 |  1  k.s    283 | Code        | 11 |         |    2 | 00/412F : 85 25       |                sta     {$25}          
+  244 |  1  k.s    283 | Code        | 11 |         |    3 | 00/4131 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  245 |  1  k.s    283 | Code        | 11 |         |    3 | 00/4134 : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  246 |  1  k.s    284 | Code        | 11 |         |    2 | 00/4137 : A9 AD       |                lda     #"-"           ; --- line 3
+  247 |  1  k.s    285 | Code        | 11 |         |    2 | 00/4139 : A2 28       |                ldx     #$28           
+  248 |  1  k.s    286 | Code        | 11 |         |    3 | 00/413B : 20 ED FD    | ozunid_2       jsr     {$FDED}        
+  249 |  1  k.s    287 | Code        | 11 |         |    1 | 00/413E : CA          |                dex                    
+  250 |  1  k.s    288 | Code        | 11 |         |    2 | 00/413F : D0 FA       |                bne     ozunid_2       
+  251 |  1  k.s    289 | Code        | 11 |         |    1 | 00/4141 : 60          |                rts                    
+  252 |  1  k.s    290 | Comment     | 11 |         |    0 | 00/4142               | *
+  253 |  1  k.s    291 | Comment     | 11 |         |    0 | 00/4142               | * PREFIX
+  254 |  1  k.s    292 | Comment     | 11 |         |    0 | 00/4142               | *
+  255 |  1  k.s    293 | Code        | 11 |         |    1 | 00/4142 : EA          | DoPrefix       nop                    
+  256 |  1  k.s    294 | Code        | 11 |         |    3 | 00/4143 : 20 00 BF    |                jsr     {$BF00}        ; GET PREFIX
+  257 |  1  k.s    295 | Data        | 11 |         |    1 | 00/4146 : C7          |                dfb     {$c7}          
+  258 |  1  k.s    296 | Data        | 11 |         |    2 | 00/4147 : F9 44       |                da      c7_parms       
+  259 |  1  k.s    297 | Code        | 11 |         |    2 | 00/4149 : B0 35       |                bcs     dpend          ; error  : exit
+  260 |  1  k.s    298 | Code        | 11 |         |    1 | 00/414B : 18          |                clc                    ; because print above may set carry
+  261 |  1  k.s    299 | Code        | 11 |         |    3 | 00/414C : AE 00 50    |                ldx     {$5000}        ; get length
+  262 |  1  k.s    300 | Code        | 11 |         |    2 | 00/414F : D0 2F       |                bne     dpend          ; prefix already set : rts
+  263 |  1  k.s    301 | Code        | 11 |         |    3 | 00/4151 : AD 30 BF    |                lda     {$BF30}        ; prefix empty : call online
+  264 |  1  k.s    302 | Code        | 11 |         |    3 | 00/4154 : 8D F3 44    |                sta     c5_parms+1     ; with last used device
+  265 |  1  k.s    303 | Code        | 11 |         |    3 | 00/4157 : 20 00 BF    |                jsr     {$BF00}        ; ONLINE
+  266 |  1  k.s    304 | Data        | 11 |         |    1 | 00/415A : C5          |                dfb     {$C5}          
+  267 |  1  k.s    305 | Data        | 11 |         |    2 | 00/415B : F2 44       |                da      c5_parms       
+  268 |  1  k.s    306 | Code        | 11 |         |    2 | 00/415D : B0 21       |                bcs     dpend          ; error  : exit
+  269 |  1  k.s    307 | Comment     | 11 |         |    0 | 00/415F               | * adjust prefix for set prefix call
+  270 |  1  k.s    308 | Code        | 11 |         |    3 | 00/415F : AD 00 50    |                lda     {$5000}        ; get length of prefix
+  271 |  1  k.s    309 | Code        | 11 |         |    2 | 00/4162 : 29 0F       |                and     #$0F           ; in lower nibble
+  272 |  1  k.s    310 | Code        | 11 |         |    1 | 00/4164 : AA          |                tax                    ; in x
+  273 |  1  k.s    311 | Code        | 11 |         |    1 | 00/4165 : A8          |                tay                    ; saved in y
+  274 |  1  k.s    312 | Code        | 11 |         |    1 | 00/4166 : E8          |                inx                    ; +1 for /
+  275 |  1  k.s    313 | Code        | 11 |         |    3 | 00/4167 : B9 00 50    | ozunid_3       lda     {$5000},y      ; shift string 1 char. right
+  276 |  1  k.s    314 | Code        | 11 |         |    3 | 00/416A : 99 01 50    |                sta     {$5000}+1,y    
+  277 |  1  k.s    315 | Code        | 11 |         |    1 | 00/416D : 88          |                dey                    
+  278 |  1  k.s    316 | Code        | 11 |         |    2 | 00/416E : D0 F7       |                bne     ozunid_3       
+  279 |  1  k.s    317 | Code        | 11 |         |    2 | 00/4170 : A9 2F       |                lda     #$2f           ; add  "/"
+  280 |  1  k.s    318 | Code        | 11 |         |    3 | 00/4172 : 8D 01 50    |                sta     {$5000}+1      ; before prefix
+  281 |  1  k.s    319 | Code        | 11 |         |    3 | 00/4175 : 8E 00 50    |                stx     {$5000}        ; length first
+  282 |  1  k.s    320 | Code        | 11 |         |    3 | 00/4178 : 20 00 BF    |                jsr     {$BF00}        ; SET PREFIX
+  283 |  1  k.s    321 | Data        | 11 |         |    1 | 00/417B : C6          |                dfb     {$c6}          
+  284 |  1  k.s    322 | Data        | 11 |         |    2 | 00/417C : F6 44       |                da      c6_parms       
+  285 |  1  k.s    323 | Code        | 11 |         |    2 | 00/417E : B0 00       |                bcs     dpend          ; error  : exit
+  286 |  1  k.s    324 | Code        | 11 |         |    1 | 00/4180 : EA          | dpend          nop                    
+  287 |  1  k.s    325 | Code        | 11 |         |    1 | 00/4181 : 60          |                rts                    
+  288 |  1  k.s    326 | Comment     | 11 |         |    0 | 00/4182               | *
+  289 |  1  k.s    327 | Comment     | 11 |         |    0 | 00/4182               | * * * * * * Display menu routine * * * * * *
+  290 |  1  k.s    328 | Comment     | 11 |         |    0 | 00/4182               | *
+  291 |  1  k.s    329 | Code        | 11 |         |    1 | 00/4182 : EA          | dispmenu       nop                    
+  292 |  1  k.s    330 | Code        | 11 |         |    2 | 00/4183 : A9 04       |                lda     #{$04}         
+  293 |  1  k.s    331 | Macro       | 11 |         |    0 | 00/4185               |                gotoXY  0;{$04}        
+  294 |  1  k.s    331 | Code        | 11 |         |    2 | 00/4185 : A9 00       |                lda     #0             
+  295 |  1  k.s    331 | Code        | 11 |         |    2 | 00/4187 : 85 24       |                sta     {$24}          ; horizontal
+  296 |  1  k.s    331 | Code        | 11 |         |    2 | 00/4189 : A9 04       |                lda     #{$04}         
+  297 |  1  k.s    331 | Code        | 11 |         |    2 | 00/418B : 85 25       |                sta     {$25}          
+  298 |  1  k.s    331 | Code        | 11 |         |    3 | 00/418D : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  299 |  1  k.s    331 | Code        | 11 |         |    3 | 00/4190 : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  300 |  1  k.s    332 | Code        | 11 |         |    2 | 00/4193 : A2 00       |                ldx     #$00           
+  301 |  1  k.s    333 | Code        | 11 |         |    3 | 00/4195 : BD 26 46    | loop           lda     mtab,x         ; read menu #
+  302 |  1  k.s    334 | Code        | 11 |         |    2 | 00/4198 : F0 2A       |                beq     _fin           ; if = 0 then end
+  303 |  1  k.s    335 | Code        | 11 |         |    1 | 00/419A : 48          |                pha                    ; save meun #
+  304 |  1  k.s    336 | Code        | 11 |         |    1 | 00/419B : E8          |                inx                    ; read string memory location
+  305 |  1  k.s    337 | Code        | 11 |         |    3 | 00/419C : BD 26 46    |                lda     mtab,x         ; in ptr1
+  306 |  1  k.s    338 | Code        | 11 |         |    2 | 00/419F : 85 06       |                sta     {$06}          
+  307 |  1  k.s    339 | Code        | 11 |         |    1 | 00/41A1 : E8          |                inx                    
+  308 |  1  k.s    340 | Code        | 11 |         |    3 | 00/41A2 : BD 26 46    |                lda     mtab,x         
+  309 |  1  k.s    341 | Code        | 11 |         |    2 | 00/41A5 : 85 07       |                sta     {$06}+1        
+  310 |  1  k.s    342 | Code        | 11 |         |    1 | 00/41A7 : 68          |                pla                    ; get menu #
+  311 |  1  k.s    343 | Code        | 11 |         |    3 | 00/41A8 : CD 33 46    |                cmp     curm           ; = menu # to hilight ?
+  312 |  1  k.s    344 | Code        | 11 |         |    2 | 00/41AB : D0 08       |                bne     prn            ; no : set flag to 0
+  313 |  1  k.s    345 | Code        | 11 |         |    2 | 00/41AD : A9 01       |                lda     #$01           ; yes : set flag to 1
+  314 |  1  k.s    346 | Code        | 11 |         |    3 | 00/41AF : 8D 34 46    |                sta     invflag        
+  315 |  1  k.s    347 | Code        | 11 |         |    3 | 00/41B2 : 4C BA 41    |                jmp     prn2           
+  316 |  1  k.s    348 | Code        | 11 |         |    2 | 00/41B5 : A9 00       | prn            lda     #$00           
+  317 |  1  k.s    349 | Code        | 11 |         |    3 | 00/41B7 : 8D 34 46    |                sta     invflag        
+  318 |  1  k.s    350 | Code        | 11 |         |    3 | 00/41BA : 20 C5 41    | prn2           jsr     printm         ; display menu item
+  319 |  1  k.s    351 | Code        | 11 |         |    1 | 00/41BD : E8          |                inx                    
+  320 |  1  k.s    352 | Code        | 11 |         |    3 | 00/41BE : 4C 95 41    |                jmp     loop           ; next item
+  321 |  1  k.s    353 | Code        | 11 |         |    3 | 00/41C1 : 8D 0E C0    |                sta     {$C00E}        
+  322 |  1  k.s    354 | Code        | 11 |         |    1 | 00/41C4 : 60          | _fin           rts                    
+  323 |  1  k.s    355 | Comment     | 11 |         |    0 | 00/41C5               | *
+  324 |  1  k.s    356 | Comment     | 11 |         |    0 | 00/41C5               | * * * * * * Print menu item * * * * * * 
+  325 |  1  k.s    357 | Comment     | 11 |         |    0 | 00/41C5               | *
+  326 |  1  k.s    358 | Code        | 11 |         |    1 | 00/41C5 : EA          | printm         nop                    
+  327 |  1  k.s    359 | Code        | 11 |         |    3 | 00/41C6 : 8D 0F C0    |                sta     {$C00F}        ; to get lowercase inverse
+  328 |  1  k.s    360 | Comment     | 11 |         |    0 | 00/41C9               | * charsets explained here : 
+  329 |  1  k.s    361 | Comment     | 11 |         |    0 | 00/41C9               | * https://retrocomputing.stackexchange.com/questions/8652/
+  330 |  1  k.s    362 | Comment     | 11 |         |    0 | 00/41C9               | * and here :
+  331 |  1  k.s    363 | Comment     | 11 |         |    0 | 00/41C9               | * http://hackzapple.org/scripts_php/index.php?menu=14&mod=8517283d55e912b0b5ac842147e28904a4a751d3&page=7
+  332 |  1  k.s    364 | Code        | 11 |         |    2 | 00/41C9 : A0 00       |                ldy     #$00           
+  333 |  1  k.s    365 | Code        | 11 |         |    2 | 00/41CB : B1 06       | lprint         lda     ({$06}),y      ; read menu string
+  334 |  1  k.s    366 | Code        | 11 |         |    2 | 00/41CD : F0 1D       |                beq     printend       ; ended by 0
+  335 |  1  k.s    367 | Code        | 11 |         |    1 | 00/41CF : 48          |                pha                    ; save char. to display
+  336 |  1  k.s    368 | Code        | 11 |         |    3 | 00/41D0 : AD 34 46    |                lda     invflag        ; normal or inverse ?
+  337 |  1  k.s    369 | Code        | 11 |         |    2 | 00/41D3 : F0 0F       |                beq     normal         ; normal char.
+  338 |  1  k.s    370 | Code        | 11 |         |    1 | 00/41D5 : 68          |                pla                    
+  339 |  1  k.s    371 | Code        | 11 |         |    2 | 00/41D6 : C9 E0       |                cmp     #$E0           ; #$E0 = start of lowercase inverse
+  340 |  1  k.s    372 | Code        | 11 |         |    2 | 00/41D8 : B0 05       |                bge     lower          
+  341 |  1  k.s    373 | Code        | 11 |         |    2 | 00/41DA : 29 3F       |                and     #$3F           ; to get inverse uppercase
+  342 |  1  k.s    374 | Code        | 11 |         |    3 | 00/41DC : 4C E5 41    |                jmp     out            
+  343 |  1  k.s    375 | Code        | 11 |         |    2 | 00/41DF : 29 7F       | lower          and     #$7F           ; to get inverse lowercase
+  344 |  1  k.s    376 | Code        | 11 |         |    3 | 00/41E1 : 4C E5 41    |                jmp     out            
+  345 |  1  k.s    377 | Code        | 11 |         |    1 | 00/41E4 : 68          | normal         pla                    
+  346 |  1  k.s    378 | Code        | 11 |         |    3 | 00/41E5 : 20 ED FD    | out            jsr     {$FDED}        
+  347 |  1  k.s    379 | Code        | 11 |         |    1 | 00/41E8 : C8          |                iny                    
+  348 |  1  k.s    380 | Code        | 11 |         |    3 | 00/41E9 : 4C CB 41    |                jmp     lprint         
+  349 |  1  k.s    381 | Code        | 11 |         |    1 | 00/41EC : EA          | printend       nop                    
+  350 |  1  k.s    382 | Code        | 11 |         |    2 | 00/41ED : A9 8D       |                lda     #$8D           ; next line
+  351 |  1  k.s    383 | Code        | 11 |         |    3 | 00/41EF : 20 ED FD    |                jsr     {$FDED}        
+  352 |  1  k.s    384 | Code        | 11 |         |    1 | 00/41F2 : 60          |                rts                    
+  353 |  1  k.s    385 | Empty       | 11 |         |    0 | 00/41F3               |                                       
+  354 |  1  k.s    386 | Empty       | 11 |         |    0 | 00/41F3               |                                       
+  355 |  1  k.s    387 | Comment     | 11 |         |    0 | 00/41F3               | * * * * * * * * *
+  356 |  1  k.s    388 | Comment     | 11 |         |    0 | 00/41F3               | * Do commands   *
+  357 |  1  k.s    389 | Comment     | 11 |         |    0 | 00/41F3               | * * * * * * * * *
+  358 |  1  k.s    390 | Comment     | 11 |         |    0 | 00/41F3               | *
+  359 |  1  k.s    391 | Code        | 11 |         |    1 | 00/41F3 : EA          | docom          nop                    
+  360 |  1  k.s    392 | Code        | 11 |         |    3 | 00/41F4 : AD 33 46    |                lda     curm           
+  361 |  1  k.s    393 | Code        | 11 |         |    2 | 00/41F7 : C9 01       |                cmp     #$01           ; change préfix ?
+  362 |  1  k.s    394 | Code        | 11 |         |    2 | 00/41F9 : D0 03       |                bne     nextcmd        
+  363 |  1  k.s    395 | Code        | 11 |         |    3 | 00/41FB : 4C 12 42    |                jmp     ChangePF       
+  364 |  1  k.s    396 | Code        | 11 |         |    2 | 00/41FE : C9 02       | nextcmd        cmp     #$02           ; encrypt file ?
+  365 |  1  k.s    397 | Code        | 11 |         |    2 | 00/4200 : D0 03       |                bne     next2          
+  366 |  1  k.s    398 | Code        | 11 |         |    3 | 00/4202 : 4C A1 42    |                jmp     Encrypt        
+  367 |  1  k.s    399 | Code        | 11 |         |    2 | 00/4205 : C9 03       | next2          cmp     #$03           ; decrypt file ?
+  368 |  1  k.s    400 | Code        | 11 |         |    2 | 00/4207 : D0 03       |                bne     next3          
+  369 |  1  k.s    401 | Code        | 11 |         |    3 | 00/4209 : 4C 21 44    |                jmp     Decrypt        
+  370 |  1  k.s    402 | Code        | 11 |         |    2 | 00/420C : A9 01       | next3          lda     #$01           ; else : quit
+  371 |  1  k.s    403 | Code        | 11 |         |    3 | 00/420E : 8D C5 45    |                sta     quit           
+  372 |  1  k.s    404 | Code        | 11 |         |    1 | 00/4211 : 60          |                rts                    
+  373 |  1  k.s    405 | Empty       | 11 |         |    0 | 00/4212               |                                       
+  374 |  1  k.s    406 | Code        | 11 |         |    1 | 00/4212 : EA          | ChangePF       nop                    
+  375 |  1  k.s    407 | Macro       | 11 |         |    0 | 00/4213               |                gotoXY  0;$10          
+  376 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4213 : A9 00       |                lda     #0             
+  377 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4215 : 85 24       |                sta     {$24}          ; horizontal
+  378 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4217 : A9 10       |                lda     #$10           
+  379 |  1  k.s    407 | Code        | 11 |         |    2 | 00/4219 : 85 25       |                sta     {$25}          
+  380 |  1  k.s    407 | Code        | 11 |         |    3 | 00/421B : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  381 |  1  k.s    407 | Code        | 11 |         |    3 | 00/421E : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  382 |  1  k.s    408 | Macro       | 11 |         |    0 | 00/4221               |                print   newpf          ; invite user
+  383 |  1  k.s    408 | Code        | 11 |         |    2 | 00/4221 : A2 00       |                ldx     #$00           ; in argument
+  384 |  1  k.s    408 | Code        | 11 |         |    3 | 00/4223 : BD C6 45    | ozunid_13      lda     newpf,X        
+  385 |  1  k.s    408 | Code        | 11 |         |    2 | 00/4226 : F0 08       |                beq     ozunid_14      
+  386 |  1  k.s    408 | Code        | 11 |         |    2 | 00/4228 : 09 80       |                ora     #$80           
+  387 |  1  k.s    408 | Code        | 11 |         |    3 | 00/422A : 20 ED FD    |                jsr     {$FDED}        
+  388 |  1  k.s    408 | Code        | 11 |         |    1 | 00/422D : E8          |                inx                    
+  389 |  1  k.s    408 | Code        | 11 |         |    2 | 00/422E : 80 F3       |                bra     ozunid_13      
+  390 |  1  k.s    408 | Empty       | 11 |         |    0 | 00/4230               | ozunid_14                             
+  391 |  1  k.s    409 | Macro       | 11 |         |    0 | 00/4230               |                cr                     
+  392 |  1  k.s    409 | Code        | 11 |         |    2 | 00/4230 : A9 8D       |                lda     #$8D           
+  393 |  1  k.s    409 | Code        | 11 |         |    3 | 00/4232 : 20 ED FD    |                jsr     {$FDED}        
+  394 |  1  k.s    410 | Macro       | 11 |         |    0 | 00/4235               |                input   {$5000}        ; get new prefix from user
+  395 |  1  k.s    410 | Empty       | 11 |         |    0 | 00/4235               |                                       
+  396 |  1  k.s    410 | Code        | 11 |         |    3 | 00/4235 : 2C 10 C0    |                bit     {$C010}        
+  397 |  1  k.s    410 | Code        | 11 |         |    3 | 00/4238 : 4C 3C 42    |                jmp     ozunid_16      
+  398 |  1  k.s    410 | Data        | 11 |         |    1 | 00/423B : 00          | ozunid_15      hex     00             
+  399 |  1  k.s    410 | Code        | 11 |         |    2 | 00/423C : A5 33       | ozunid_16      lda     {$33}          ; save prompt char.
+  400 |  1  k.s    410 | Code        | 11 |         |    3 | 00/423E : 8D 3B 42    |                sta     ozunid_15      
+  401 |  1  k.s    410 | Code        | 11 |         |    2 | 00/4241 : A9 BE       |                lda     #$BE           ; ">"
+  402 |  1  k.s    410 | Code        | 11 |         |    2 | 00/4243 : 85 33       |                sta     {$33}          
+  403 |  1  k.s    410 | Code        | 11 |         |    3 | 00/4245 : 20 6A FD    |                jsr     {$FD6A}        
+  404 |  1  k.s    410 | Code        | 11 |         |    1 | 00/4248 : 8A          |                txa                    
+  405 |  1  k.s    410 | Code        | 11 |         |    1 | 00/4249 : A8          |                tay                    ; save length in Y
+  406 |  1  k.s    410 | Code        | 11 |         |    2 | 00/424A : F0 10       |                beq     ozunid_18      
+  407 |  1  k.s    410 | Code        | 11 |         |    3 | 00/424C : BD 00 02    | ozunid_17      lda     $200,X         
+  408 |  1  k.s    410 | Code        | 11 |         |    3 | 00/424F : 9D 01 50    |                sta     {$5000}+1,x    
+  409 |  1  k.s    410 | Code        | 11 |         |    1 | 00/4252 : CA          |                dex                    
+  410 |  1  k.s    410 | Code        | 11 |         |    2 | 00/4253 : E0 FF       |                cpx     #$FF           
+  411 |  1  k.s    410 | Code        | 11 |         |    2 | 00/4255 : D0 F5       |                bne     ozunid_17      
+  412 |  1  k.s    410 | Code        | 11 |         |    2 | 00/4257 : A9 00       |                lda     #$00           
+  413 |  1  k.s    410 | Code        | 11 |         |    3 | 00/4259 : 99 01 50    |                sta     {$5000}+1,y    ; zero at the end
+  414 |  1  k.s    410 | Code        | 11 |         |    3 | 00/425C : 8C 00 50    | ozunid_18      sty     {$5000}        ; length in first byte
+  415 |  1  k.s    410 | Code        | 11 |         |    3 | 00/425F : AD 3B 42    |                lda     ozunid_15      
+  416 |  1  k.s    410 | Code        | 11 |         |    2 | 00/4262 : 85 33       |                sta     {$33}          
+  417 |  1  k.s    411 | Code        | 11 |         |    3 | 00/4264 : AD 00 50    |                lda     {$5000}        ; get length
+  418 |  1  k.s    412 | Code        | 11 |         |    2 | 00/4267 : F0 20       |                beq     okpf           
+  419 |  1  k.s    413 | Code        | 11 |         |    3 | 00/4269 : 20 00 BF    |                jsr     {$BF00}        ; SET PREFIX
+  420 |  1  k.s    414 | Data        | 11 |         |    1 | 00/426C : C6          |                dfb     {$c6}          
+  421 |  1  k.s    415 | Data        | 11 |         |    2 | 00/426D : F6 44       |                da      c6_parms       
+  422 |  1  k.s    416 | Code        | 11 |         |    2 | 00/426F : 90 18       |                bcc     okpf           
+  423 |  1  k.s    417 | Code        | 11 |         |    1 | 00/4271 : 48          |                pha                    
+  424 |  1  k.s    418 | Macro       | 11 |         |    0 | 00/4272               |                print   err            
+  425 |  1  k.s    418 | Code        | 11 |         |    2 | 00/4272 : A2 00       |                ldx     #$00           ; in argument
+  426 |  1  k.s    418 | Code        | 11 |         |    3 | 00/4274 : BD B8 45    | ozunid_19      lda     err,X          
+  427 |  1  k.s    418 | Code        | 11 |         |    2 | 00/4277 : F0 08       |                beq     ozunid_20      
+  428 |  1  k.s    418 | Code        | 11 |         |    2 | 00/4279 : 09 80       |                ora     #$80           
+  429 |  1  k.s    418 | Code        | 11 |         |    3 | 00/427B : 20 ED FD    |                jsr     {$FDED}        
+  430 |  1  k.s    418 | Code        | 11 |         |    1 | 00/427E : E8          |                inx                    
+  431 |  1  k.s    418 | Code        | 11 |         |    2 | 00/427F : 80 F3       |                bra     ozunid_19      
+  432 |  1  k.s    418 | Empty       | 11 |         |    0 | 00/4281               | ozunid_20                             
+  433 |  1  k.s    419 | Code        | 11 |         |    1 | 00/4281 : 68          |                pla                    
+  434 |  1  k.s    420 | Code        | 11 |         |    1 | 00/4282 : AA          |                tax                    
+  435 |  1  k.s    421 | Code        | 11 |         |    3 | 00/4283 : 20 44 F9    |                jsr     {$F944}        
+  436 |  1  k.s    422 | Code        | 11 |         |    3 | 00/4286 : 20 0C FD    |                jsr     {$FD0C}        
+  437 |  1  k.s    423 | Code        | 11 |         |    3 | 00/4289 : 20 42 41    | okpf           jsr     DoPrefix       
+  438 |  1  k.s    424 | Code        | 11 |         |    3 | 00/428C : 20 27 40    |                jsr     ShowPF         
+  439 |  1  k.s    425 | Macro       | 11 |         |    0 | 00/428F               |                gotoXY  0;$10          
+  440 |  1  k.s    425 | Code        | 11 |         |    2 | 00/428F : A9 00       |                lda     #0             
+  441 |  1  k.s    425 | Code        | 11 |         |    2 | 00/4291 : 85 24       |                sta     {$24}          ; horizontal
+  442 |  1  k.s    425 | Code        | 11 |         |    2 | 00/4293 : A9 10       |                lda     #$10           
+  443 |  1  k.s    425 | Code        | 11 |         |    2 | 00/4295 : 85 25       |                sta     {$25}          
+  444 |  1  k.s    425 | Code        | 11 |         |    3 | 00/4297 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  445 |  1  k.s    425 | Code        | 11 |         |    3 | 00/429A : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  446 |  1  k.s    426 | Code        | 11 |         |    3 | 00/429D : 20 42 FC    |                jsr     {$FC42}        
+  447 |  1  k.s    427 | Code        | 11 |         |    1 | 00/42A0 : 60          |                rts                    
+  448 |  1  k.s    428 | Empty       | 11 |         |    0 | 00/42A1               |                                       
+  449 |  1  k.s    429 | Code        | 11 |         |    1 | 00/42A1 : EA          | Encrypt        nop                    ; Encrypte a file
+  450 |  1  k.s    430 | Code        | 11 |         |    2 | 00/42A2 : A9 00       |                lda     #$00           
+  451 |  1  k.s    431 | Code        | 11 |         |    3 | 00/42A4 : 8D B4 45    |                sta     secretp        ; init position in secret
+  452 |  1  k.s    432 | Macro       | 11 |         |    0 | 00/42A7               |                gotoXY  0;$10          
+  453 |  1  k.s    432 | Code        | 11 |         |    2 | 00/42A7 : A9 00       |                lda     #0             
+  454 |  1  k.s    432 | Code        | 11 |         |    2 | 00/42A9 : 85 24       |                sta     {$24}          ; horizontal
+  455 |  1  k.s    432 | Code        | 11 |         |    2 | 00/42AB : A9 10       |                lda     #$10           
+  456 |  1  k.s    432 | Code        | 11 |         |    2 | 00/42AD : 85 25       |                sta     {$25}          
+  457 |  1  k.s    432 | Code        | 11 |         |    3 | 00/42AF : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  458 |  1  k.s    432 | Code        | 11 |         |    3 | 00/42B2 : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  459 |  1  k.s    433 | Macro       | 11 |         |    0 | 00/42B5               |                print   encryf         ; invite user
+  460 |  1  k.s    433 | Code        | 11 |         |    2 | 00/42B5 : A2 00       |                ldx     #$00           ; in argument
+  461 |  1  k.s    433 | Code        | 11 |         |    3 | 00/42B7 : BD D9 45    | ozunid_21      lda     encryf,X       
+  462 |  1  k.s    433 | Code        | 11 |         |    2 | 00/42BA : F0 08       |                beq     ozunid_22      
+  463 |  1  k.s    433 | Code        | 11 |         |    2 | 00/42BC : 09 80       |                ora     #$80           
+  464 |  1  k.s    433 | Code        | 11 |         |    3 | 00/42BE : 20 ED FD    |                jsr     {$FDED}        
+  465 |  1  k.s    433 | Code        | 11 |         |    1 | 00/42C1 : E8          |                inx                    
+  466 |  1  k.s    433 | Code        | 11 |         |    2 | 00/42C2 : 80 F3       |                bra     ozunid_21      
+  467 |  1  k.s    433 | Empty       | 11 |         |    0 | 00/42C4               | ozunid_22                             
+  468 |  1  k.s    434 | Macro       | 11 |         |    0 | 00/42C4               |                cr                     
+  469 |  1  k.s    434 | Code        | 11 |         |    2 | 00/42C4 : A9 8D       |                lda     #$8D           
+  470 |  1  k.s    434 | Code        | 11 |         |    3 | 00/42C6 : 20 ED FD    |                jsr     {$FDED}        
+  471 |  1  k.s    435 | Macro       | 11 |         |    0 | 00/42C9               |                input   fname          
+  472 |  1  k.s    435 | Empty       | 11 |         |    0 | 00/42C9               |                                       
+  473 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42C9 : 2C 10 C0    |                bit     {$C010}        
+  474 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42CC : 4C D0 42    |                jmp     ozunid_24      
+  475 |  1  k.s    435 | Data        | 11 |         |    1 | 00/42CF : 00          | ozunid_23      hex     00             
+  476 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42D0 : A5 33       | ozunid_24      lda     {$33}          ; save prompt char.
+  477 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42D2 : 8D CF 42    |                sta     ozunid_23      
+  478 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42D5 : A9 BE       |                lda     #$BE           ; ">"
+  479 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42D7 : 85 33       |                sta     {$33}          
+  480 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42D9 : 20 6A FD    |                jsr     {$FD6A}        
+  481 |  1  k.s    435 | Code        | 11 |         |    1 | 00/42DC : 8A          |                txa                    
+  482 |  1  k.s    435 | Code        | 11 |         |    1 | 00/42DD : A8          |                tay                    ; save length in Y
+  483 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42DE : F0 10       |                beq     ozunid_26      
+  484 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42E0 : BD 00 02    | ozunid_25      lda     $200,X         
+  485 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42E3 : 9D 1B 45    |                sta     fname+1,x      
+  486 |  1  k.s    435 | Code        | 11 |         |    1 | 00/42E6 : CA          |                dex                    
+  487 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42E7 : E0 FF       |                cpx     #$FF           
+  488 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42E9 : D0 F5       |                bne     ozunid_25      
+  489 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42EB : A9 00       |                lda     #$00           
+  490 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42ED : 99 1B 45    |                sta     fname+1,y      ; zero at the end
+  491 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42F0 : 8C 1A 45    | ozunid_26      sty     fname          ; length in first byte
+  492 |  1  k.s    435 | Code        | 11 |         |    3 | 00/42F3 : AD CF 42    |                lda     ozunid_23      
+  493 |  1  k.s    435 | Code        | 11 |         |    2 | 00/42F6 : 85 33       |                sta     {$33}          
+  494 |  1  k.s    436 | Code        | 11 |         |    3 | 00/42F8 : AD 1A 45    |                lda     fname          ; get length of filename
+  495 |  1  k.s    437 | Code        | 11 |         |    2 | 00/42FB : D0 03       |                bne     _1             
+  496 |  1  k.s    438 | Code        | 11 |         |    3 | 00/42FD : 4C 04 44    |                jmp     outenc         ; 0 length : exit
+  497 |  1  k.s    439 | Code        | 11 |         |    3 | 00/4300 : 20 00 BF    | _1             jsr     {$BF00}        ; OPEN file to encrypt
+  498 |  1  k.s    440 | Data        | 11 |         |    1 | 00/4303 : C8          |                dfb     {$C8}          
+  499 |  1  k.s    441 | Data        | 11 |         |    2 | 00/4304 : FC 44       |                da      c8_parms       
+  500 |  1  k.s    442 | Code        | 11 |         |    2 | 00/4306 : 90 1B       |                bcc     okopen         ; open ok ?
+  501 |  1  k.s    443 | Code        | 11 |         |    1 | 00/4308 : 48          | doerr          pha                    ; no
+  502 |  1  k.s    444 | Macro       | 11 |         |    0 | 00/4309               |                print   err            
+  503 |  1  k.s    444 | Code        | 11 |         |    2 | 00/4309 : A2 00       |                ldx     #$00           ; in argument
+  504 |  1  k.s    444 | Code        | 11 |         |    3 | 00/430B : BD B8 45    | ozunid_27      lda     err,X          
+  505 |  1  k.s    444 | Code        | 11 |         |    2 | 00/430E : F0 08       |                beq     ozunid_28      
+  506 |  1  k.s    444 | Code        | 11 |         |    2 | 00/4310 : 09 80       |                ora     #$80           
+  507 |  1  k.s    444 | Code        | 11 |         |    3 | 00/4312 : 20 ED FD    |                jsr     {$FDED}        
+  508 |  1  k.s    444 | Code        | 11 |         |    1 | 00/4315 : E8          |                inx                    
+  509 |  1  k.s    444 | Code        | 11 |         |    2 | 00/4316 : 80 F3       |                bra     ozunid_27      
+  510 |  1  k.s    444 | Empty       | 11 |         |    0 | 00/4318               | ozunid_28                             
+  511 |  1  k.s    445 | Code        | 11 |         |    1 | 00/4318 : 68          |                pla                    
+  512 |  1  k.s    446 | Code        | 11 |         |    1 | 00/4319 : AA          |                tax                    
+  513 |  1  k.s    447 | Code        | 11 |         |    3 | 00/431A : 20 44 F9    |                jsr     {$F944}        
+  514 |  1  k.s    448 | Code        | 11 |         |    3 | 00/431D : 20 0C FD    |                jsr     {$FD0C}        
+  515 |  1  k.s    449 | Code        | 11 |         |    3 | 00/4320 : 4C 04 44    |                jmp     outenc         ; clear screen and exit
+  516 |  1  k.s    450 | Comment     | 11 |         |    0 | 00/4323               | *
+  517 |  1  k.s    451 | Macro       | 11 |         |    0 | 00/4323               | okopen         closef  #$00           ; close all
+  518 |  1  k.s    451 | Code        | 11 |         |    2 | 00/4323 : A9 00       |                lda     #$00           
+  519 |  1  k.s    451 | Code        | 11 |         |    3 | 00/4325 : 8D 19 45    |                sta     cc_parms+1     
+  520 |  1  k.s    451 | Code        | 11 |         |    3 | 00/4328 : 20 00 BF    |                jsr     {$BF00}        
+  521 |  1  k.s    451 | Data        | 11 |         |    1 | 00/432B : CC          |                dfb     {$CC}          
+  522 |  1  k.s    451 | Data        | 11 |         |    2 | 00/432C : 18 45       |                da      cc_parms       
+  523 |  1  k.s    452 | Code        | 11 |         |    2 | 00/432E : 90 03       |                bcc     closeok        
+  524 |  1  k.s    453 | Code        | 11 |         |    3 | 00/4330 : 4C 08 43    |                jmp     doerr          
+  525 |  1  k.s    454 | Code        | 11 |         |    1 | 00/4333 : EA          | closeok        nop                    ; output file
+  526 |  1  k.s    455 | Code        | 11 |         |    3 | 00/4334 : 20 23 44    |                jsr     MovefileName   ; copy filename +".K"
+  527 |  1  k.s    456 | Code        | 11 |         |    3 | 00/4337 : 20 00 BF    |                jsr     {$BF00}        ; OPEN output file
+  528 |  1  k.s    457 | Data        | 11 |         |    1 | 00/433A : C8          |                dfb     {$C8}          
+  529 |  1  k.s    458 | Data        | 11 |         |    2 | 00/433B : 02 45       |                da      c8_parmsW      
+  530 |  1  k.s    459 | Code        | 11 |         |    2 | 00/433D : C9 46       |                cmp     #$46           ; file not found ?
+  531 |  1  k.s    460 | Code        | 11 |         |    2 | 00/433F : F0 40       |                beq     noexist        
+  532 |  1  k.s    461 | Code        | 11 |         |    2 | 00/4341 : C9 00       |                cmp     #$00           
+  533 |  1  k.s    462 | Code        | 11 |         |    2 | 00/4343 : D0 C3       |                bne     doerr          ; use above error management
+  534 |  1  k.s    463 | Comment     | 11 |         |    0 | 00/4345               | * file .K exists 
+  535 |  1  k.s    464 | Macro       | 11 |         |    0 | 00/4345               |                closef  refW           ; close it
+  536 |  1  k.s    464 | Code        | 11 |         |    3 | 00/4345 : AD 07 45    |                lda     refW           
+  537 |  1  k.s    464 | Code        | 11 |         |    3 | 00/4348 : 8D 19 45    |                sta     cc_parms+1     
+  538 |  1  k.s    464 | Code        | 11 |         |    3 | 00/434B : 20 00 BF    |                jsr     {$BF00}        
+  539 |  1  k.s    464 | Data        | 11 |         |    1 | 00/434E : CC          |                dfb     {$CC}          
+  540 |  1  k.s    464 | Data        | 11 |         |    2 | 00/434F : 18 45       |                da      cc_parms       
+  541 |  1  k.s    465 | Macro       | 11 |         |    0 | 00/4351               |                print   quest1         ; erase ?
+  542 |  1  k.s    465 | Code        | 11 |         |    2 | 00/4351 : A2 00       |                ldx     #$00           ; in argument
+  543 |  1  k.s    465 | Code        | 11 |         |    3 | 00/4353 : BD F6 45    | ozunid_29      lda     quest1,X       
+  544 |  1  k.s    465 | Code        | 11 |         |    2 | 00/4356 : F0 08       |                beq     ozunid_30      
+  545 |  1  k.s    465 | Code        | 11 |         |    2 | 00/4358 : 09 80       |                ora     #$80           
+  546 |  1  k.s    465 | Code        | 11 |         |    3 | 00/435A : 20 ED FD    |                jsr     {$FDED}        
+  547 |  1  k.s    465 | Code        | 11 |         |    1 | 00/435D : E8          |                inx                    
+  548 |  1  k.s    465 | Code        | 11 |         |    2 | 00/435E : 80 F3       |                bra     ozunid_29      
+  549 |  1  k.s    465 | Empty       | 11 |         |    0 | 00/4360               | ozunid_30                             
+  550 |  1  k.s    466 | Macro       | 11 |         |    0 | 00/4360               |                getYN                  
+  551 |  1  k.s    466 | Code        | 11 |         |    3 | 00/4360 : 20 0C FD    |                jsr     {$FD0C}        ; otherwise, Carry = 1
+  552 |  1  k.s    466 | Code        | 11 |         |    2 | 00/4363 : C9 D9       |                cmp     #"Y"           
+  553 |  1  k.s    466 | Code        | 11 |         |    2 | 00/4365 : F0 08       |                beq     ozunid_31      
+  554 |  1  k.s    466 | Code        | 11 |         |    2 | 00/4367 : C9 F9       |                cmp     #"y"           
+  555 |  1  k.s    466 | Code        | 11 |         |    2 | 00/4369 : F0 04       |                beq     ozunid_31      
+  556 |  1  k.s    466 | Code        | 11 |         |    1 | 00/436B : 38          |                sec                    
+  557 |  1  k.s    466 | Code        | 11 |         |    3 | 00/436C : 4C 70 43    |                jmp     ozunid_32      
+  558 |  1  k.s    466 | Code        | 11 |         |    1 | 00/436F : 18          | ozunid_31      clc                    
+  559 |  1  k.s    466 | Code        | 11 |         |    1 | 00/4370 : EA          | ozunid_32      nop                    
+  560 |  1  k.s    467 | Code        | 11 |         |    2 | 00/4371 : 90 03       |                bcc     delete         
+  561 |  1  k.s    468 | Code        | 11 |         |    3 | 00/4373 : 4C 04 44    |                jmp     outenc         ; no : clear screen and exit
+  562 |  1  k.s    469 | Code        | 11 |         |    3 | 00/4376 : 20 00 BF    | delete         jsr     {$BF00}        
+  563 |  1  k.s    470 | Data        | 11 |         |    1 | 00/4379 : C1          |                dfb     {$C1}          
+  564 |  1  k.s    471 | Data        | 11 |         |    2 | 00/437A : EF 44       |                da      c1_params      
+  565 |  1  k.s    472 | Code        | 11 |         |    2 | 00/437C : 90 03       |                bcc     noexist        
+  566 |  1  k.s    473 | Code        | 11 |         |    3 | 00/437E : 4C 08 43    |                jmp     doerr          
+  567 |  1  k.s    474 | Comment     | 11 |         |    0 | 00/4381               | *
+  568 |  1  k.s    475 | Code        | 11 |         |    1 | 00/4381 : EA          | noexist        nop                    
+  569 |  1  k.s    476 | Code        | 11 |         |    3 | 00/4382 : 20 00 BF    |                jsr     {$BF00}        ; CREATE output file
+  570 |  1  k.s    477 | Data        | 11 |         |    1 | 00/4385 : C0          |                dfb     {$C0}          
+  571 |  1  k.s    478 | Data        | 11 |         |    2 | 00/4386 : E3 44       |                da      c0_parms       
+  572 |  1  k.s    479 | Code        | 11 |         |    2 | 00/4388 : 90 03       |                bcc     closA          
+  573 |  1  k.s    480 | Code        | 11 |         |    3 | 00/438A : 4C 08 43    |                jmp     doerr          
+  574 |  1  k.s    481 | Macro       | 11 |         |    0 | 00/438D               | closA          closef  #$00           ; close all
+  575 |  1  k.s    481 | Code        | 11 |         |    2 | 00/438D : A9 00       |                lda     #$00           
+  576 |  1  k.s    481 | Code        | 11 |         |    3 | 00/438F : 8D 19 45    |                sta     cc_parms+1     
+  577 |  1  k.s    481 | Code        | 11 |         |    3 | 00/4392 : 20 00 BF    |                jsr     {$BF00}        
+  578 |  1  k.s    481 | Data        | 11 |         |    1 | 00/4395 : CC          |                dfb     {$CC}          
+  579 |  1  k.s    481 | Data        | 11 |         |    2 | 00/4396 : 18 45       |                da      cc_parms       
+  580 |  1  k.s    482 | Code        | 11 |         |    3 | 00/4398 : 20 00 BF    |                jsr     {$BF00}        ; OPEN output file
+  581 |  1  k.s    483 | Data        | 11 |         |    1 | 00/439B : C8          |                dfb     {$C8}          
+  582 |  1  k.s    484 | Data        | 11 |         |    2 | 00/439C : 02 45       |                da      c8_parmsW      
+  583 |  1  k.s    485 | Code        | 11 |         |    3 | 00/439E : AD 07 45    |                lda     refW           ; set ref
+  584 |  1  k.s    486 | Code        | 11 |         |    3 | 00/43A1 : 8D 11 45    |                sta     refWW          ; for writing
+  585 |  1  k.s    487 | Comment     | 11 |         |    0 | 00/43A4               | *
+  586 |  1  k.s    488 | Code        | 11 |         |    3 | 00/43A4 : 20 00 BF    |                jsr     {$BF00}        ; re OPEN file to encrypt
+  587 |  1  k.s    489 | Data        | 11 |         |    1 | 00/43A7 : C8          |                dfb     {$C8}          
+  588 |  1  k.s    490 | Data        | 11 |         |    2 | 00/43A8 : FC 44       |                da      c8_parms       
+  589 |  1  k.s    491 | Code        | 11 |         |    2 | 00/43AA : 90 03       |                bcc     readf          
+  590 |  1  k.s    492 | Code        | 11 |         |    3 | 00/43AC : 4C 08 43    |                jmp     doerr          
+  591 |  1  k.s    493 | Code        | 11 |         |    3 | 00/43AF : 20 47 44    | readf          jsr     RW             ; read, encrypt, write
+  592 |  1  k.s    494 | Code        | 11 |         |    2 | 00/43B2 : 90 50       |                bcc     outenc         
+  593 |  1  k.s    495 | Code        | 11 |         |    2 | 00/43B4 : C9 4C       |                cmp     #$4C           ; end of file
+  594 |  1  k.s    496 | Code        | 11 |         |    2 | 00/43B6 : F0 29       |                beq     outok          
+  595 |  1  k.s    497 | Code        | 11 |         |    1 | 00/43B8 : 48          |                pha                    
+  596 |  1  k.s    498 | Macro       | 11 |         |    0 | 00/43B9               |                gotoXY  0;$10          
+  597 |  1  k.s    498 | Code        | 11 |         |    2 | 00/43B9 : A9 00       |                lda     #0             
+  598 |  1  k.s    498 | Code        | 11 |         |    2 | 00/43BB : 85 24       |                sta     {$24}          ; horizontal
+  599 |  1  k.s    498 | Code        | 11 |         |    2 | 00/43BD : A9 10       |                lda     #$10           
+  600 |  1  k.s    498 | Code        | 11 |         |    2 | 00/43BF : 85 25       |                sta     {$25}          
+  601 |  1  k.s    498 | Code        | 11 |         |    3 | 00/43C1 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  602 |  1  k.s    498 | Code        | 11 |         |    3 | 00/43C4 : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  603 |  1  k.s    499 | Macro       | 11 |         |    0 | 00/43C7               |                print   err            
+  604 |  1  k.s    499 | Code        | 11 |         |    2 | 00/43C7 : A2 00       |                ldx     #$00           ; in argument
+  605 |  1  k.s    499 | Code        | 11 |         |    3 | 00/43C9 : BD B8 45    | ozunid_33      lda     err,X          
+  606 |  1  k.s    499 | Code        | 11 |         |    2 | 00/43CC : F0 08       |                beq     ozunid_34      
+  607 |  1  k.s    499 | Code        | 11 |         |    2 | 00/43CE : 09 80       |                ora     #$80           
+  608 |  1  k.s    499 | Code        | 11 |         |    3 | 00/43D0 : 20 ED FD    |                jsr     {$FDED}        
+  609 |  1  k.s    499 | Code        | 11 |         |    1 | 00/43D3 : E8          |                inx                    
+  610 |  1  k.s    499 | Code        | 11 |         |    2 | 00/43D4 : 80 F3       |                bra     ozunid_33      
+  611 |  1  k.s    499 | Empty       | 11 |         |    0 | 00/43D6               | ozunid_34                             
+  612 |  1  k.s    500 | Code        | 11 |         |    1 | 00/43D6 : 68          |                pla                    
+  613 |  1  k.s    501 | Code        | 11 |         |    1 | 00/43D7 : AA          |                tax                    
+  614 |  1  k.s    502 | Code        | 11 |         |    3 | 00/43D8 : 20 44 F9    |                jsr     {$F944}        
+  615 |  1  k.s    503 | Code        | 11 |         |    3 | 00/43DB : 20 0C FD    |                jsr     {$FD0C}        
+  616 |  1  k.s    504 | Code        | 11 |         |    3 | 00/43DE : 4C 04 44    |                jmp     outenc         
+  617 |  1  k.s    505 | Macro       | 11 |         |    0 | 00/43E1               | outok          gotoXY  0;$12          ; message file encrypted OK
+  618 |  1  k.s    505 | Code        | 11 |         |    2 | 00/43E1 : A9 00       |                lda     #0             
+  619 |  1  k.s    505 | Code        | 11 |         |    2 | 00/43E3 : 85 24       |                sta     {$24}          ; horizontal
+  620 |  1  k.s    505 | Code        | 11 |         |    2 | 00/43E5 : A9 12       |                lda     #$12           
+  621 |  1  k.s    505 | Code        | 11 |         |    2 | 00/43E7 : 85 25       |                sta     {$25}          
+  622 |  1  k.s    505 | Code        | 11 |         |    3 | 00/43E9 : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  623 |  1  k.s    505 | Code        | 11 |         |    3 | 00/43EC : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  624 |  1  k.s    506 | Macro       | 11 |         |    0 | 00/43EF               |                print   fileok         
+  625 |  1  k.s    506 | Code        | 11 |         |    2 | 00/43EF : A2 00       |                ldx     #$00           ; in argument
+  626 |  1  k.s    506 | Code        | 11 |         |    3 | 00/43F1 : BD 15 46    | ozunid_35      lda     fileok,X       
+  627 |  1  k.s    506 | Code        | 11 |         |    2 | 00/43F4 : F0 08       |                beq     ozunid_36      
+  628 |  1  k.s    506 | Code        | 11 |         |    2 | 00/43F6 : 09 80       |                ora     #$80           
+  629 |  1  k.s    506 | Code        | 11 |         |    3 | 00/43F8 : 20 ED FD    |                jsr     {$FDED}        
+  630 |  1  k.s    506 | Code        | 11 |         |    1 | 00/43FB : E8          |                inx                    
+  631 |  1  k.s    506 | Code        | 11 |         |    2 | 00/43FC : 80 F3       |                bra     ozunid_35      
+  632 |  1  k.s    506 | Empty       | 11 |         |    0 | 00/43FE               | ozunid_36                             
+  633 |  1  k.s    507 | Code        | 11 |         |    3 | 00/43FE : 20 9C FC    |                jsr     {$FC9C}        
+  634 |  1  k.s    508 | Code        | 11 |         |    3 | 00/4401 : 20 0C FD    |                jsr     {$FD0C}        
+  635 |  1  k.s    509 | Macro       | 11 |         |    0 | 00/4404               | outenc         gotoXY  0;$10          ; claer screen and return
+  636 |  1  k.s    509 | Code        | 11 |         |    2 | 00/4404 : A9 00       |                lda     #0             
+  637 |  1  k.s    509 | Code        | 11 |         |    2 | 00/4406 : 85 24       |                sta     {$24}          ; horizontal
+  638 |  1  k.s    509 | Code        | 11 |         |    2 | 00/4408 : A9 10       |                lda     #$10           
+  639 |  1  k.s    509 | Code        | 11 |         |    2 | 00/440A : 85 25       |                sta     {$25}          
+  640 |  1  k.s    509 | Code        | 11 |         |    3 | 00/440C : 20 22 FC    |                jsr     {$FC22}        ; vertical
+  641 |  1  k.s    509 | Code        | 11 |         |    3 | 00/440F : 20 9C FC    |                jsr     {$FC9C}        ; clear end of line
+  642 |  1  k.s    510 | Code        | 11 |         |    3 | 00/4412 : 20 42 FC    |                jsr     {$FC42}        
+  643 |  1  k.s    511 | Macro       | 11 |         |    0 | 00/4415               |                closef  #$00           
+  644 |  1  k.s    511 | Code        | 11 |         |    2 | 00/4415 : A9 00       |                lda     #$00           
+  645 |  1  k.s    511 | Code        | 11 |         |    3 | 00/4417 : 8D 19 45    |                sta     cc_parms+1     
+  646 |  1  k.s    511 | Code        | 11 |         |    3 | 00/441A : 20 00 BF    |                jsr     {$BF00}        
+  647 |  1  k.s    511 | Data        | 11 |         |    1 | 00/441D : CC          |                dfb     {$CC}          
+  648 |  1  k.s    511 | Data        | 11 |         |    2 | 00/441E : 18 45       |                da      cc_parms       
+  649 |  1  k.s    512 | Code        | 11 |         |    1 | 00/4420 : 60          |                rts                    
+  650 |  1  k.s    513 | Empty       | 11 |         |    0 | 00/4421               |                                       
+  651 |  1  k.s    514 | Code        | 11 |         |    1 | 00/4421 : EA          | Decrypt        nop                    
+  652 |  1  k.s    515 | Code        | 11 |         |    1 | 00/4422 : 60          |                rts                    
+  653 |  1  k.s    516 | Empty       | 11 |         |    0 | 00/4423               |                                       
+  654 |  1  k.s    517 | Comment     | 11 |         |    0 | 00/4423               | *
+  655 |  1  k.s    518 | Code        | 11 |         |    3 | 00/4423 : AC 1A 45    | MovefileName   ldy     fname          ; filename ==> filename.K
+  656 |  1  k.s    519 | Code        | 11 |         |    2 | 00/4426 : A2 00       |                ldx     #$00           
+  657 |  1  k.s    520 | Code        | 11 |         |    3 | 00/4428 : BD 1B 45    | movefn         lda     fname+1,x      
+  658 |  1  k.s    521 | Code        | 11 |         |    3 | 00/442B : 9D 5C 45    |                sta     fnameW+1,x     
+  659 |  1  k.s    522 | Code        | 11 |         |    1 | 00/442E : E8          |                inx                    
+  660 |  1  k.s    523 | Code        | 11 |         |    1 | 00/442F : 88          |                dey                    
+  661 |  1  k.s    524 | Code        | 11 |         |    2 | 00/4430 : D0 F6       |                bne     movefn         
+  662 |  1  k.s    525 | Code        | 11 |         |    2 | 00/4432 : A9 AE       |                lda     #"."           
+  663 |  1  k.s    526 | Code        | 11 |         |    3 | 00/4434 : 9D 5C 45    |                sta     fnameW+1,x     
+  664 |  1  k.s    527 | Code        | 11 |         |    1 | 00/4437 : E8          |                inx                    
+  665 |  1  k.s    528 | Code        | 11 |         |    2 | 00/4438 : A9 CB       |                lda     #"K"           
+  666 |  1  k.s    529 | Code        | 11 |         |    3 | 00/443A : 9D 5C 45    |                sta     fnameW+1,x     
+  667 |  1  k.s    530 | Code        | 11 |         |    3 | 00/443D : AD 1A 45    |                lda     fname          
+  668 |  1  k.s    531 | Code        | 11 |         |    1 | 00/4440 : 18          |                clc                    
+  669 |  1  k.s    532 | Code        | 11 |         |    2 | 00/4441 : 69 02       |                adc     #$02           
+  670 |  1  k.s    533 | Code        | 11 |         |    3 | 00/4443 : 8D 5B 45    |                sta     fnameW         
+  671 |  1  k.s    534 | Code        | 11 |         |    1 | 00/4446 : 60          |                rts                    
+  672 |  1  k.s    535 | Comment     | 11 |         |    0 | 00/4447               | *
+  673 |  1  k.s    536 | Code        | 11 |         |    1 | 00/4447 : EA          | RW             nop                    ; read, encrypt, write
+  674 |  1  k.s    537 | Code        | 11 |         |    3 | 00/4448 : AD 01 45    |                lda     ref            
+  675 |  1  k.s    538 | Code        | 11 |         |    3 | 00/444B : 8D 09 45    |                sta     ca_parms+1     ; ref. of file to read
+  676 |  1  k.s    539 | Code        | 11 |         |    3 | 00/444E : 20 00 BF    |                jsr     {$BF00}        ; READ 256 bytes
+  677 |  1  k.s    540 | Data        | 11 |         |    1 | 00/4451 : CA          |                dfb     {$CA}          
+  678 |  1  k.s    541 | Data        | 11 |         |    2 | 00/4452 : 08 45       |                da      ca_parms       
+  679 |  1  k.s    542 | Code        | 11 |         |    2 | 00/4454 : C9 4C       |                cmp     #$4C           ; end of file ?
+  680 |  1  k.s    543 | Code        | 11 |         |    2 | 00/4456 : F0 02       |                beq     RWex           ; yes : return
+  681 |  1  k.s    544 | Code        | 11 |         |    2 | 00/4458 : 90 01       |                bcc     rw2            ; no (and no error)
+  682 |  1  k.s    545 | Code        | 11 |         |    1 | 00/445A : 60          | RWex           rts                    ; exit if end of file or error
+  683 |  1  k.s    546 | Empty       | 11 |         |    0 | 00/445B               |                                       
+  684 |  1  k.s    547 | Code        | 11 |         |    1 | 00/445B : EA          | rw2            nop                    
+  685 |  1  k.s    548 | Code        | 11 |         |    3 | 00/445C : 20 76 44    |                jsr     docode         
+  686 |  1  k.s    549 | Code        | 11 |         |    3 | 00/445F : AD 0E 45    |                lda     readlen        ; set bytes to write = bytes read
+  687 |  1  k.s    550 | Code        | 11 |         |    3 | 00/4462 : 8D 14 45    |                sta     reql           
+  688 |  1  k.s    551 | Code        | 11 |         |    3 | 00/4465 : AD 0F 45    |                lda     readlen+1      
+  689 |  1  k.s    552 | Code        | 11 |         |    3 | 00/4468 : 8D 15 45    |                sta     reql+1         
+  690 |  1  k.s    553 | Code        | 11 |         |    3 | 00/446B : 20 00 BF    |                jsr     {$BF00}        ; WRITE
+  691 |  1  k.s    554 | Data        | 11 |         |    1 | 00/446E : CB          |                dfb     {$CB}          
+  692 |  1  k.s    555 | Data        | 11 |         |    2 | 00/446F : 10 45       |                da      cb_parms       
+  693 |  1  k.s    556 | Code        | 11 |         |    2 | 00/4471 : B0 E7       |                bcs     RWex           
+  694 |  1  k.s    557 | Code        | 11 |         |    3 | 00/4473 : 4C 47 44    |                jmp     RW             
+  695 |  1  k.s    558 | Comment     | 11 |         |    0 | 00/4476               | *
+  696 |  1  k.s    559 | Code        | 11 |         |    1 | 00/4476 : EA          | docode         nop                    ; encrypt file buffer
+  697 |  1  k.s    560 | Code        | 11 |         |    3 | 00/4477 : AD 0E 45    |                lda     readlen        ; check > 0 bytes read
+  698 |  1  k.s    561 | Code        | 11 |         |    3 | 00/447A : 0D 0F 45    |                ora     readlen+1      
+  699 |  1  k.s    562 | Code        | 11 |         |    2 | 00/447D : F0 63       |                beq     outdocode      ; if 0 : exit
+  700 |  1  k.s    563 | Code        | 11 |         |    2 | 00/447F : A9 00       |                lda     #$00           ; init. 16 bits counter
+  701 |  1  k.s    564 | Code        | 11 |         |    3 | 00/4481 : 8D B5 45    |                sta     cpt16          
+  702 |  1  k.s    565 | Code        | 11 |         |    3 | 00/4484 : 8D B6 45    |                sta     cpt16+1        
+  703 |  1  k.s    566 | Comment     | 11 |         |    0 | 00/4487               | *
+  704 |  1  k.s    567 | Code        | 11 |         |    3 | 00/4487 : AD 00 5A    | charge         lda     {$5A00}        ; read byte in buffer
+  705 |  1  k.s    568 | Code        | 11 |         |    1 | 00/448A : 48          |                pha                    ; save it
+  706 |  1  k.s    569 | Code        | 11 |         |    3 | 00/448B : AE B4 45    | code           ldx     secretp        ; get position in secret
+  707 |  1  k.s    570 | Code        | 11 |         |    3 | 00/448E : BD A8 45    |                lda     secret,x       ; get secret byte
+  708 |  1  k.s    571 | Code        | 11 |         |    3 | 00/4491 : 8D B7 45    |                sta     eorval         ; store it for later eor
+  709 |  1  k.s    572 | Code        | 11 |         |    2 | 00/4494 : D0 06       |                bne     cod2           ; end of secret not reached
+  710 |  1  k.s    573 | Code        | 11 |         |    3 | 00/4496 : 8D B4 45    |                sta     secretp        ; end of secret reached : pos = 0
+  711 |  1  k.s    574 | Code        | 11 |         |    3 | 00/4499 : 4C 8B 44    |                jmp     code           ; reload secret byte
+  712 |  1  k.s    575 | Code        | 11 |         |    1 | 00/449C : 68          | cod2           pla                    ; pop byte read
+  713 |  1  k.s    576 | Code        | 11 |         |    3 | 00/449D : EE B4 45    |                inc     secretp        ; next byte in secret
+  714 |  1  k.s    577 | Code        | 11 |         |    3 | 00/44A0 : 4D B7 45    |                eor     eorval         ; encrypt !!
+  715 |  1  k.s    578 | Code        | 11 |         |    3 | 00/44A3 : 8D 00 5C    | doout          sta     {$5C00}        ; store in buffer to write
+  716 |  1  k.s    579 | Macro       | 11 |         |    0 | 00/44A6               |                m_inc   cpt16          ; counter +=2
+  717 |  1  k.s    579 | Code        | 11 |         |    3 | 00/44A6 : EE B5 45    |                inc     cpt16          ; usually a pointer
+  718 |  1  k.s    579 | Code        | 11 |         |    2 | 00/44A9 : D0 03       |                bne     ozunid_37      
+  719 |  1  k.s    579 | Code        | 11 |         |    3 | 00/44AB : EE B6 45    |                inc     cpt16+1        
+  720 |  1  k.s    579 | Empty       | 11 |         |    0 | 00/44AE               | ozunid_37                             
+  721 |  1  k.s    580 | Macro       | 11 |         |    0 | 00/44AE               | selfmod        m_inc   charge+1       ; self modify load address
+  722 |  1  k.s    580 | Code        | 11 |         |    3 | 00/44AE : EE 88 44    |                inc     charge+1       ; usually a pointer
+  723 |  1  k.s    580 | Code        | 11 |         |    2 | 00/44B1 : D0 03       |                bne     ozunid_38      
+  724 |  1  k.s    580 | Code        | 11 |         |    3 | 00/44B3 : EE 89 44    |                inc     charge+1+1     
+  725 |  1  k.s    580 | Empty       | 11 |         |    0 | 00/44B6               | ozunid_38                             
+  726 |  1  k.s    581 | Macro       | 11 |         |    0 | 00/44B6               | self2          m_inc   doout+1        ; self modify store address
+  727 |  1  k.s    581 | Code        | 11 |         |    3 | 00/44B6 : EE A4 44    |                inc     doout+1        ; usually a pointer
+  728 |  1  k.s    581 | Code        | 11 |         |    2 | 00/44B9 : D0 03       |                bne     ozunid_39      
+  729 |  1  k.s    581 | Code        | 11 |         |    3 | 00/44BB : EE A5 44    |                inc     doout+1+1      
+  730 |  1  k.s    581 | Empty       | 11 |         |    0 | 00/44BE               | ozunid_39                             
+  731 |  1  k.s    582 | Code        | 11 |         |    3 | 00/44BE : AD B6 45    | compar         lda     cpt16+1        ; compare counter
+  732 |  1  k.s    583 | Code        | 11 |         |    3 | 00/44C1 : CD 0F 45    |                cmp     readlen+1      ; with bytes read
+  733 |  1  k.s    584 | Code        | 11 |         |    2 | 00/44C4 : D0 C1       |                bne     charge         
+  734 |  1  k.s    585 | Code        | 11 |         |    3 | 00/44C6 : AD B5 45    |                lda     cpt16          
+  735 |  1  k.s    586 | Code        | 11 |         |    3 | 00/44C9 : CD 0E 45    |                cmp     readlen        
+  736 |  1  k.s    587 | Code        | 11 |         |    2 | 00/44CC : D0 B9       |                bne     charge         ; loop if counter <> bytes read
+  737 |  1  k.s    588 | Comment     | 11 |         |    0 | 00/44CE               | *
+  738 |  1  k.s    589 | Code        | 11 |         |    2 | 00/44CE : A9 00       |                lda     #<{$5A00}      ; restore buffers addresses
+  739 |  1  k.s    590 | Code        | 11 |         |    3 | 00/44D0 : 8D 88 44    |                sta     charge+1       
+  740 |  1  k.s    591 | Code        | 11 |         |    2 | 00/44D3 : A9 5A       |                lda     #>{$5A00}      
+  741 |  1  k.s    592 | Code        | 11 |         |    3 | 00/44D5 : 8D 89 44    |                sta     charge+2       
+  742 |  1  k.s    593 | Code        | 11 |         |    2 | 00/44D8 : A9 00       |                lda     #<{$5C00}      
+  743 |  1  k.s    594 | Code        | 11 |         |    3 | 00/44DA : 8D A4 44    |                sta     doout+1        
+  744 |  1  k.s    595 | Code        | 11 |         |    2 | 00/44DD : A9 5C       |                lda     #>{$5C00}      
+  745 |  1  k.s    596 | Code        | 11 |         |    3 | 00/44DF : 8D A5 44    |                sta     doout+2        
+  746 |  1  k.s    597 | Code        | 11 |         |    1 | 00/44E2 : 60          | outdocode      rts                    
+  747 |  1  k.s    598 | Empty       | 11 |         |    0 | 00/44E3               |                                       
+  748 |  1  k.s    599 | Comment     | 11 |         |    0 | 00/44E3               | *
+  749 |  1  k.s    600 | Comment     | 11 |         |    0 | 00/44E3               | **********************************       
+  750 |  1  k.s    601 | Comment     | 11 |         |    0 | 00/44E3               | *              DATA              *
+  751 |  1  k.s    602 | Comment     | 11 |         |    0 | 00/44E3               | ********************************** 
+  752 |  1  k.s    603 | Empty       | 11 |         |    0 | 00/44E3               | c0_parms                              ; create file
+  753 |  1  k.s    604 | Data        | 11 |         |    1 | 00/44E3 : 07          |                hex     07             
+  754 |  1  k.s    605 | Data        | 11 |         |    2 | 00/44E4 : 5B 45       |                da      fnameW         ; file name
+  755 |  1  k.s    606 | Data        | 11 |         |    1 | 00/44E6 : C3          |                hex     C3             ; access bits
+  756 |  1  k.s    607 | Data        | 11 |         |    1 | 00/44E7 : 06          |                hex     06             ; file type = BIN
+  757 |  1  k.s    608 | Data        | 11 |         |    2 | 00/44E8 : 00 00       |                hex     0000           ; aux file type
+  758 |  1  k.s    609 | Data        | 11 |         |    1 | 00/44EA : 01          |                hex     01             ; storage type
+  759 |  1  k.s    610 | Data        | 11 |         |    2 | 00/44EB : 00 00       |                hex     0000           ; date
+  760 |  1  k.s    611 | Data        | 11 |         |    2 | 00/44ED : 00 00       |                hex     0000           ; time
+  761 |  1  k.s    612 | Empty       | 11 |         |    0 | 00/44EF               |                                       
+  762 |  1  k.s    613 | Empty       | 11 |         |    0 | 00/44EF               | c1_params                             ; destroy file
+  763 |  1  k.s    614 | Data        | 11 |         |    1 | 00/44EF : 01          |                hex     01             
+  764 |  1  k.s    615 | Data        | 11 |         |    2 | 00/44F0 : 5B 45       |                da      fnameW         ; file name
+  765 |  1  k.s    616 | Empty       | 11 |         |    0 | 00/44F2               |                                       
+  766 |  1  k.s    617 | Empty       | 11 |         |    0 | 00/44F2               | c5_parms                              ; online
+  767 |  1  k.s    618 | Data        | 11 |         |    1 | 00/44F2 : 02          |                hex     02             
+  768 |  1  k.s    619 | Data        | 11 |         |    1 | 00/44F3 : 00          |                hex     00             
+  769 |  1  k.s    620 | Data        | 11 |         |    2 | 00/44F4 : 00 50       |                da      {$5000}        
+  770 |  1  k.s    621 | Empty       | 11 |         |    0 | 00/44F6               |                                       
+  771 |  1  k.s    622 | Empty       | 11 |         |    0 | 00/44F6               | c6_parms                              ; set_prefix
+  772 |  1  k.s    623 | Data        | 11 |         |    1 | 00/44F6 : 01          |                hex     01             
+  773 |  1  k.s    624 | Data        | 11 |         |    2 | 00/44F7 : 00 50       |                da      {$5000}        
+  774 |  1  k.s    625 | Empty       | 11 |         |    0 | 00/44F9               |                                       
+  775 |  1  k.s    626 | Empty       | 11 |         |    0 | 00/44F9               |                                       
+  776 |  1  k.s    627 | Empty       | 11 |         |    0 | 00/44F9               | c7_parms                              ; get_prefix
+  777 |  1  k.s    628 | Data        | 11 |         |    1 | 00/44F9 : 01          |                hex     01             
+  778 |  1  k.s    629 | Data        | 11 |         |    2 | 00/44FA : 00 50       |                da      {$5000}        
+  779 |  1  k.s    630 | Empty       | 11 |         |    0 | 00/44FC               |                                       
+  780 |  1  k.s    631 | Empty       | 11 |         |    0 | 00/44FC               | c8_parms                              ; open file for reading
+  781 |  1  k.s    632 | Data        | 11 |         |    1 | 00/44FC : 03          |                hex     03             
+  782 |  1  k.s    633 | Data        | 11 |         |    2 | 00/44FD : 1A 45       |                da      fname          
+  783 |  1  k.s    634 | Data        | 11 |         |    2 | 00/44FF : 00 51       |                da      {$5100}        
+  784 |  1  k.s    635 | Data        | 11 |         |    1 | 00/4501 : 00          | ref            hex     00             
+  785 |  1  k.s    636 | Empty       | 11 |         |    0 | 00/4502               |                                       
+  786 |  1  k.s    637 | Empty       | 11 |         |    0 | 00/4502               | c8_parmsW                             ; open file for writing
+  787 |  1  k.s    638 | Data        | 11 |         |    1 | 00/4502 : 03          |                hex     03             
+  788 |  1  k.s    639 | Data        | 11 |         |    2 | 00/4503 : 5B 45       |                da      fnameW         
+  789 |  1  k.s    640 | Data        | 11 |         |    2 | 00/4505 : 00 56       |                da      {$5600}        
+  790 |  1  k.s    641 | Data        | 11 |         |    1 | 00/4507 : 00          | refW           hex     00             
+  791 |  1  k.s    642 | Empty       | 11 |         |    0 | 00/4508               |                                       
+  792 |  1  k.s    643 | Empty       | 11 |         |    0 | 00/4508               | ca_parms                              ; read file
+  793 |  1  k.s    644 | Data        | 11 |         |    1 | 00/4508 : 04          |                hex     04             ; number of params.
+  794 |  1  k.s    645 | Data        | 11 |         |    1 | 00/4509 : 00          |                hex     00             ; ref #
+  795 |  1  k.s    646 | Data        | 11 |         |    2 | 00/450A : 00 5A       |                da      {$5A00}        
+  796 |  1  k.s    647 | Data        | 11 |         |    2 | 00/450C : 00 01       |                hex     0001           ; 256 b. requested
+  797 |  1  k.s    648 | Data        | 11 |         |    2 | 00/450E : 00 00       | readlen        hex     0000           ; b. read
+  798 |  1  k.s    649 | Empty       | 11 |         |    0 | 00/4510               |                                       
+  799 |  1  k.s    650 | Empty       | 11 |         |    0 | 00/4510               | cb_parms                              ; write file
+  800 |  1  k.s    651 | Data        | 11 |         |    1 | 00/4510 : 04          |                hex     04             
+  801 |  1  k.s    652 | Data        | 11 |         |    1 | 00/4511 : 00          | refWW          hex     00             ; file reference
+  802 |  1  k.s    653 | Data        | 11 |         |    2 | 00/4512 : 00 5C       |                da      {$5C00}        ; buffer for data to be written
+  803 |  1  k.s    654 | Data        | 11 |         |    2 | 00/4514 : 00 01       | reql           hex     0001           ; 256 b. requested
+  804 |  1  k.s    655 | Data        | 11 |         |    2 | 00/4516 : 00 00       | actl           hex     0000           ; number of byte written
+  805 |  1  k.s    656 | Empty       | 11 |         |    0 | 00/4518               |                                       
+  806 |  1  k.s    657 | Empty       | 11 |         |    0 | 00/4518               |                                       
+  807 |  1  k.s    658 | Empty       | 11 |         |    0 | 00/4518               | cc_parms                              ; close file
+  808 |  1  k.s    659 | Data        | 11 |         |    1 | 00/4518 : 01          |                hex     01             
+  809 |  1  k.s    660 | Data        | 11 |         |    1 | 00/4519 : 00          |                hex     00             
+  810 |  1  k.s    661 | Empty       | 11 |         |    0 | 00/451A               |                                       
+  811 |  1  k.s    662 | Data        | 11 |         |   65 | 00/451A : 00 00 00 00 | fname          ds      65,0           
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00 00 00 00 |
@@ -739,7 +826,7 @@
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00          |
-  725 |  1  k.s    650 | Data        | 11 |         |   65 | 00/44A8 : 00 00 00 00 | fnameW         ds      65,0           
+  812 |  1  k.s    663 | Data        | 11 |         |   65 | 00/455B : 00 00 00 00 | fnameW         ds      65,0           
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00 00 00 00 |
@@ -756,42 +843,42 @@
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00 00 00 00 |
       |                |             |    |         |      |           00          |
-  726 |  1  k.s    651 | Empty       | 11 |         |    0 | 00/44E9               |                                       
-  727 |  1  k.s    652 | Data        | 11 |         |   11 | 00/44E9 : C3 A0 F2 A0 | libtit         asc     "C r y p t o"  
+  813 |  1  k.s    664 | Empty       | 11 |         |    0 | 00/459C               |                                       
+  814 |  1  k.s    665 | Data        | 11 |         |   11 | 00/459C : C3 A0 F2 A0 | libtit         asc     "C r y p t o"  
       |                |             |    |         |      |           F9 A0 F0 A0 |
       |                |             |    |         |      |           F4 A0 EF    |
-  728 |  1  k.s    653 | Data        | 11 |         |    1 | 00/44F4 : 00          |                hex     00             
-  729 |  1  k.s    654 | Comment     | 11 |         |    0 | 00/44F5               | *
-  730 |  1  k.s    655 | Data        | 11 |         |   11 | 00/44F5 : F7 E8 E5 EE | secret         asc     "when I'm 64"  
+  815 |  1  k.s    666 | Data        | 11 |         |    1 | 00/45A7 : 00          |                hex     00             
+  816 |  1  k.s    667 | Comment     | 11 |         |    0 | 00/45A8               | *
+  817 |  1  k.s    668 | Data        | 11 |         |   11 | 00/45A8 : F7 E8 E5 EE | secret         asc     "when I'm 64"  
       |                |             |    |         |      |           A0 C9 A7 ED |
       |                |             |    |         |      |           A0 B6 B4    |
-  731 |  1  k.s    656 | Data        | 11 |         |    1 | 00/4500 : 00          |                hex     00             
-  732 |  1  k.s    657 | Data        | 11 |         |    1 | 00/4501 : 00          | secretp        hex     00             ; position in secret (offset)
-  733 |  1  k.s    658 | Data        | 11 |         |    2 | 00/4502 : 00 00       | cpt16          hex     0000           
-  734 |  1  k.s    659 | Data        | 11 |         |    1 | 00/4504 : 00          | eorval         hex     00             
-  735 |  1  k.s    660 | Comment     | 11 |         |    0 | 00/4505               | *
-  736 |  1  k.s    661 | Data        | 11 |         |   12 | 00/4505 : C9 AF CF A0 | err            asc     "I/O Error : " 
+  818 |  1  k.s    669 | Data        | 11 |         |    1 | 00/45B3 : 00          |                hex     00             
+  819 |  1  k.s    670 | Data        | 11 |         |    1 | 00/45B4 : 00          | secretp        hex     00             ; position in secret (offset)
+  820 |  1  k.s    671 | Data        | 11 |         |    2 | 00/45B5 : 00 00       | cpt16          hex     0000           
+  821 |  1  k.s    672 | Data        | 11 |         |    1 | 00/45B7 : 00          | eorval         hex     00             
+  822 |  1  k.s    673 | Comment     | 11 |         |    0 | 00/45B8               | *
+  823 |  1  k.s    674 | Data        | 11 |         |   12 | 00/45B8 : C9 AF CF A0 | err            asc     "I/O Error : " 
       |                |             |    |         |      |           C5 F2 F2 EF |
       |                |             |    |         |      |           F2 A0 BA A0 |
-  737 |  1  k.s    662 | Data        | 11 |         |    1 | 00/4511 : 00          |                hex     00             
-  738 |  1  k.s    663 | Empty       | 11 |         |    0 | 00/4512               |                                       
-  739 |  1  k.s    664 | Data        | 11 |         |    1 | 00/4512 : 00          | quit           hex     00             ; quit flag
-  740 |  1  k.s    665 | Empty       | 11 |         |    0 | 00/4513               |                                       
-  741 |  1  k.s    666 | Data        | 11 |         |   18 | 00/4513 : C5 EE F4 E5 | newpf          asc     "Enter new prefix :"
+  824 |  1  k.s    675 | Data        | 11 |         |    1 | 00/45C4 : 00          |                hex     00             
+  825 |  1  k.s    676 | Empty       | 11 |         |    0 | 00/45C5               |                                       
+  826 |  1  k.s    677 | Data        | 11 |         |    1 | 00/45C5 : 00          | quit           hex     00             ; quit flag
+  827 |  1  k.s    678 | Empty       | 11 |         |    0 | 00/45C6               |                                       
+  828 |  1  k.s    679 | Data        | 11 |         |   18 | 00/45C6 : C5 EE F4 E5 | newpf          asc     "Enter new prefix :"
       |                |             |    |         |      |           F2 A0 EE E5 |
       |                |             |    |         |      |           F7 A0 F0 F2 |
       |                |             |    |         |      |           E5 E6 E9 F8 |
       |                |             |    |         |      |           A0 BA       |
-  742 |  1  k.s    667 | Data        | 11 |         |    1 | 00/4525 : 00          |                hex     00             
-  743 |  1  k.s    668 | Data        | 11 |         |   28 | 00/4526 : C5 EE F4 E5 | encryf         asc     "Enter file name to encrypt :"
+  829 |  1  k.s    680 | Data        | 11 |         |    1 | 00/45D8 : 00          |                hex     00             
+  830 |  1  k.s    681 | Data        | 11 |         |   28 | 00/45D9 : C5 EE F4 E5 | encryf         asc     "Enter file name to encrypt :"
       |                |             |    |         |      |           F2 A0 E6 E9 |
       |                |             |    |         |      |           EC E5 A0 EE |
       |                |             |    |         |      |           E1 ED E5 A0 |
       |                |             |    |         |      |           F4 EF A0 E5 |
       |                |             |    |         |      |           EE E3 F2 F9 |
       |                |             |    |         |      |           F0 F4 A0 BA |
-  744 |  1  k.s    669 | Data        | 11 |         |    1 | 00/4542 : 00          |                hex     00             
-  745 |  1  k.s    670 | Data        | 11 |         |   30 | 00/4543 : C6 E9 EC E5 | quest1         asc     "File exists. Overwrite (Y/N) ?"
+  831 |  1  k.s    682 | Data        | 11 |         |    1 | 00/45F5 : 00          |                hex     00             
+  832 |  1  k.s    683 | Data        | 11 |         |   30 | 00/45F6 : C6 E9 EC E5 | quest1         asc     "File exists. Overwrite (Y/N) ?"
       |                |             |    |         |      |           A0 E5 F8 E9 |
       |                |             |    |         |      |           F3 F4 F3 AE |
       |                |             |    |         |      |           A0 CF F6 E5 |
@@ -799,44 +886,49 @@
       |                |             |    |         |      |           F4 E5 A0 A8 |
       |                |             |    |         |      |           D9 AF CE A9 |
       |                |             |    |         |      |           A0 BF       |
-  746 |  1  k.s    671 | Data        | 11 |         |    1 | 00/4561 : 00          |                hex     00             
-  747 |  1  k.s    672 | Comment     | 11 |         |    0 | 00/4562               | *
-  748 |  1  k.s    673 | Comment     | 11 |         |    0 | 00/4562               | * * * * * * * * DATA  * * * * * * * * 
-  749 |  1  k.s    674 | Comment     | 11 |         |    0 | 00/4562               | *  needed to dispalay menu routine  *
-  750 |  1  k.s    675 | Comment     | 11 |         |    0 | 00/4562               | * * * * * * * * * * * * * * * * * * * 
-  751 |  1  k.s    676 | Data        | 11 |         |    1 | 00/4562 : 01          | mtab           hex     01             
-  752 |  1  k.s    677 | Data        | 11 |         |    2 | 00/4563 : 71 45       |                da      m1             
-  753 |  1  k.s    678 | Data        | 11 |         |    1 | 00/4565 : 02          |                hex     02             
-  754 |  1  k.s    679 | Data        | 11 |         |    2 | 00/4566 : 7F 45       |                da      m2             
-  755 |  1  k.s    680 | Data        | 11 |         |    1 | 00/4568 : 03          |                hex     03             
-  756 |  1  k.s    681 | Data        | 11 |         |    2 | 00/4569 : 8E 45       |                da      m3             
-  757 |  1  k.s    682 | Data        | 11 |         |    1 | 00/456B : 04          |                hex     04             
-  758 |  1  k.s    683 | Data        | 11 |         |    2 | 00/456C : 9D 45       |                da      m4             
-  759 |  1  k.s    684 | Data        | 11 |         |    1 | 00/456E : 00          |                hex     00             ; flog for end of array
-  760 |  1  k.s    685 | Empty       | 11 |         |    0 | 00/456F               |                                       
-  761 |  1  k.s    686 | Data        | 11 |         |    1 | 00/456F : 00          | curm           hex     00             
-  762 |  1  k.s    687 | Data        | 11 |         |    1 | 00/4570 : 00          | invflag        hex     00             
-  763 |  1  k.s    688 | Equivalence | 11 |         |    0 | 00/4571               | menupos        equ     $04            ; start display menu on line # 4
-  764 |  1  k.s    689 | Equivalence | 11 |         |    0 | 00/4571               | menunb         equ     $04            ; 4 items in menu
-  765 |  1  k.s    690 | Empty       | 11 |         |    0 | 00/4571               |                                       
-  766 |  1  k.s    691 | Data        | 11 |         |   13 | 00/4571 : C3 E8 E1 EE | m1             asc     "Change PREFIX"
+  833 |  1  k.s    684 | Data        | 11 |         |    1 | 00/4614 : 00          |                hex     00             
+  834 |  1  k.s    685 | Data        | 11 |         |   16 | 00/4615 : C6 E9 EC E5 | fileok         asc     "File encrypted !"
+      |                |             |    |         |      |           A0 E5 EE E3 |
+      |                |             |    |         |      |           F2 F9 F0 F4 |
+      |                |             |    |         |      |           E5 E4 A0 A1 |
+  835 |  1  k.s    686 | Data        | 11 |         |    1 | 00/4625 : 00          |                hex     00             
+  836 |  1  k.s    687 | Comment     | 11 |         |    0 | 00/4626               | *
+  837 |  1  k.s    688 | Comment     | 11 |         |    0 | 00/4626               | * * * * * * * * DATA  * * * * * * * * 
+  838 |  1  k.s    689 | Comment     | 11 |         |    0 | 00/4626               | *  needed to dispalay menu routine  *
+  839 |  1  k.s    690 | Comment     | 11 |         |    0 | 00/4626               | * * * * * * * * * * * * * * * * * * * 
+  840 |  1  k.s    691 | Data        | 11 |         |    1 | 00/4626 : 01          | mtab           hex     01             
+  841 |  1  k.s    692 | Data        | 11 |         |    2 | 00/4627 : 35 46       |                da      m1             
+  842 |  1  k.s    693 | Data        | 11 |         |    1 | 00/4629 : 02          |                hex     02             
+  843 |  1  k.s    694 | Data        | 11 |         |    2 | 00/462A : 43 46       |                da      m2             
+  844 |  1  k.s    695 | Data        | 11 |         |    1 | 00/462C : 03          |                hex     03             
+  845 |  1  k.s    696 | Data        | 11 |         |    2 | 00/462D : 52 46       |                da      m3             
+  846 |  1  k.s    697 | Data        | 11 |         |    1 | 00/462F : 04          |                hex     04             
+  847 |  1  k.s    698 | Data        | 11 |         |    2 | 00/4630 : 61 46       |                da      m4             
+  848 |  1  k.s    699 | Data        | 11 |         |    1 | 00/4632 : 00          |                hex     00             ; flog for end of array
+  849 |  1  k.s    700 | Empty       | 11 |         |    0 | 00/4633               |                                       
+  850 |  1  k.s    701 | Data        | 11 |         |    1 | 00/4633 : 00          | curm           hex     00             
+  851 |  1  k.s    702 | Data        | 11 |         |    1 | 00/4634 : 00          | invflag        hex     00             
+  852 |  1  k.s    703 | Equivalence | 11 |         |    0 | 00/4635               | menupos        equ     $04            ; start display menu on line # 4
+  853 |  1  k.s    704 | Equivalence | 11 |         |    0 | 00/4635               | menunb         equ     $04            ; 4 items in menu
+  854 |  1  k.s    705 | Empty       | 11 |         |    0 | 00/4635               |                                       
+  855 |  1  k.s    706 | Data        | 11 |         |   13 | 00/4635 : C3 E8 E1 EE | m1             asc     "Change PREFIX"
       |                |             |    |         |      |           E7 E5 A0 D0 |
       |                |             |    |         |      |           D2 C5 C6 C9 |
       |                |             |    |         |      |           D8          |
-  767 |  1  k.s    692 | Data        | 11 |         |    1 | 00/457E : 00          |                hex     00             
-  768 |  1  k.s    693 | Data        | 11 |         |   14 | 00/457F : C5 EE E3 F2 | m2             asc     "Encrypt a file"
+  856 |  1  k.s    707 | Data        | 11 |         |    1 | 00/4642 : 00          |                hex     00             
+  857 |  1  k.s    708 | Data        | 11 |         |   14 | 00/4643 : C5 EE E3 F2 | m2             asc     "Encrypt a file"
       |                |             |    |         |      |           F9 F0 F4 A0 |
       |                |             |    |         |      |           E1 A0 E6 E9 |
       |                |             |    |         |      |           EC E5       |
-  769 |  1  k.s    694 | Data        | 11 |         |    1 | 00/458D : 00          |                hex     00             
-  770 |  1  k.s    695 | Data        | 11 |         |   14 | 00/458E : C4 E5 E3 F2 | m3             asc     "Decrypt a file"
+  858 |  1  k.s    709 | Data        | 11 |         |    1 | 00/4651 : 00          |                hex     00             
+  859 |  1  k.s    710 | Data        | 11 |         |   14 | 00/4652 : C4 E5 E3 F2 | m3             asc     "Decrypt a file"
       |                |             |    |         |      |           F9 F0 F4 A0 |
       |                |             |    |         |      |           E1 A0 E6 E9 |
       |                |             |    |         |      |           EC E5       |
-  771 |  1  k.s    696 | Data        | 11 |         |    1 | 00/459C : 00          |                hex     00             
-  772 |  1  k.s    697 | Data        | 11 |         |    4 | 00/459D : C5 F8 E9 F4 | m4             asc     "Exit"         
-  773 |  1  k.s    698 | Data        | 11 |         |    1 | 00/45A1 : 00          |                hex     00             
-  774 |  1  k.s    699 | Empty       | 11 |         |    0 | 00/45A2               |                                       
-  775 |  1  k.s    700 | Empty       | 11 |         |    0 | 00/45A2               |                                       
-  776 |  1  k.s    701 | Empty       | 11 |         |    0 | 00/45A2               |                                       
+  860 |  1  k.s    711 | Data        | 11 |         |    1 | 00/4660 : 00          |                hex     00             
+  861 |  1  k.s    712 | Data        | 11 |         |    4 | 00/4661 : C5 F8 E9 F4 | m4             asc     "Exit"         
+  862 |  1  k.s    713 | Data        | 11 |         |    1 | 00/4665 : 00          |                hex     00             
+  863 |  1  k.s    714 | Empty       | 11 |         |    0 | 00/4666               |                                       
+  864 |  1  k.s    715 | Empty       | 11 |         |    0 | 00/4666               |                                       
+  865 |  1  k.s    716 | Empty       | 11 |         |    0 | 00/4666               |                                       
 ------+----------------+-------------+----+---------+------+-----------------------+-------------------------------------------------------------------

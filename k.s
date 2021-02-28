@@ -33,8 +33,8 @@ rdkey     equ $FD0C     ; wait for keypress
 
 *
 * ROM switches
-ALTCHARSET0FF equ $C00E 
-ALTCHARSET0N equ $C00F
+ALTCHARSET0FF   equ $C00E 
+ALTCHARSET0N    equ $C00F
 kbd     equ $C000
 kbdstrb equ $C010
 *
@@ -173,6 +173,14 @@ Yes     clc
 YNend   nop
         EOM
 
+gotoXY  MAC             ; set cursor position on screen
+        lda #]1
+        sta ch          ; horizontal
+        lda #]2
+        sta cv
+        jsr vtab        ; vertical
+        jsr clreol      ; clear end of line
+        EOM
         FIN
 *
 * * * * * * * * * *
@@ -182,9 +190,9 @@ YNend   nop
         ORG $4000
 main    nop
 * init
-        sta col80off   ; 40 col.
         jsr text
         jsr home
+        sta col80off   ; 40 col.
         closef #$00     ; close all files
 *
         jsr GetPF
@@ -198,11 +206,7 @@ GetPF   nop
         rts
 
 ShowPF  nop
-        lda #$00
-        sta cv
-        sta ch
-        jsr vtab
-        jsr clreol 
+        gotoXY 0;0
         prnstr pfbuffer
         ldx pfbuffer
         lda pfbuffer,x
@@ -268,14 +272,16 @@ doloop  jsr dispmenu
 *
 *  TITLE
 *
-title   ldx #$28       ; 40 col.
-dotitle lda #"-"
+title   gotoXY 0;1
+        ldx #$28       ; 40 col.
+dotitle lda #"-"        ; --- line 1
 ]loop   jsr cout
         dex 
         bne ]loop
-        printc libtit
-        jsr cr
-        lda #"-"
+        gotoXY 0;2
+        printc libtit   ; C r y p t o
+        gotoXY 0;3
+        lda #"-"        ; --- line 3
         ldx #$28
 ]loop2  jsr cout
         dex 
@@ -288,7 +294,7 @@ DoPrefix nop
         jsr  MLI        ; GET PREFIX
         dfb getprefix
         da c7_parms
-        bcs dpend      ; error  : exit
+        bcs dpend       ; error  : exit
         clc             ; because print above may set carry
         ldx pfbuffer    ; get length       
         bne dpend       ; prefix already set : rts
@@ -304,7 +310,7 @@ DoPrefix nop
         tax             ; in x      
         tay             ; saved in y
         inx             ; +1 for /
-]loop   lda pfbuffer,y   ; shift string 1 char. right
+]loop   lda pfbuffer,y  ; shift string 1 char. right
         sta pfbuffer+1,y
         dey
         bne ]loop
@@ -322,8 +328,7 @@ dpend   nop
 *
 dispmenu nop
         lda #menupos
-        sta cv
-        jsr vtab
+        gotoXY 0;menupos
         ldx #$00
 loop    lda mtab,x      ; read menu #
         beq :fin        ; if = 0 then end
@@ -399,9 +404,7 @@ next3   lda #$01        ; else : quit
         rts
 
 ChangePF nop
-        lda #$10
-        sta cv
-        jsr vtab
+        gotoXY 0;$10
         print newpf     ; invite user
         cr
         input pfbuffer  ; get new prefix from user
@@ -419,16 +422,14 @@ ChangePF nop
         jsr rdkey
 okpf    jsr DoPrefix
         jsr ShowPF
-        lda #$10
-        sta cv
-        jsr vtab
+        gotoXY 0;$10
         jsr clreop
         rts
 
 Encrypt nop             ; Encrypte a file
-        lda #$10
-        sta cv
-        jsr vtab
+        lda #$00
+        sta secretp     ; init position in secret
+        gotoXY 0;$10
         print encryf    ; invite user
         cr
         input fname
@@ -463,8 +464,9 @@ closeok nop             ; output file
         closef refW     ; close it
         print quest1    ; erase ?
         getYN
-        bcs outenc      ; no : clear screen and exit
-        jsr MLI
+        bcc delete
+        jmp outenc      ; no : clear screen and exit
+delete  jsr MLI
         dfb destroy
         da c1_params
         bcc noexist
@@ -474,8 +476,9 @@ noexist nop
         jsr MLI         ; CREATE output file
         dfb create
         da c0_parms
-        bcs doerr
-        closef #$00     ; close all
+        bcc closA
+        jmp doerr
+closA   closef #$00     ; close all
         jsr MLI         ; OPEN output file
         dfb open
         da  c8_parmsW
@@ -487,14 +490,23 @@ noexist nop
         da  c8_parms
         bcc readf 
         jmp doerr 
-readf   jsr RW
-* bcs ... error !!! XXXXXXXXXXXX
-
-outenc  lda #$10
-        sta cv
-        jsr vtab
-        lda #$00
-        sta ch
+readf   jsr RW          ; read, encrypt, write 
+        bcc outenc
+        cmp #$4C        ; end of file 
+        beq outok
+        pha 
+        gotoXY 0;$10
+        print err
+        pla 
+        tax 
+        jsr xtohex
+        jsr rdkey
+        jmp outenc 
+outok   gotoXY 0;$12        ; message file encrypted OK
+        print fileok
+        jsr clreol
+        jsr rdkey
+outenc  gotoXY 0;$10        ; claer screen and return
         jsr clreop
         closef #$00
         rts
@@ -534,15 +546,16 @@ RWex    rts             ; exit if end of file or error
 
 rw2     nop
         jsr docode
-        jsr MLI         ; WRITE 256 bytes
+        lda readlen     ; set bytes to write = bytes read
+        sta reql
+        lda readlen+1
+        sta reql+1        
+        jsr MLI         ; WRITE 
         dfb write
         da  cb_parms
         bcs RWex
         jmp RW
- 
-
-
-
+*
 docode  nop             ; encrypt file buffer 
         lda readlen     ; check > 0 bytes read
         ora readlen+1
@@ -562,18 +575,18 @@ code    ldx secretp     ; get position in secret
 cod2    pla             ; pop byte read  
         inc secretp     ; next byte in secret
         eor eorval      ; encrypt !!
-doout   sta wrbuff      ; stoe in buffer to write   
+doout   sta wrbuff      ; store in buffer to write   
         m_inc cpt16     ; counter +=2
 selfmod m_inc charge+1  ; self modify load address
 self2   m_inc doout+1   ; self modify store address
-compar  lda cpt16       ; compare counter
-        cmp readlen     ; with bytes read
+compar  lda cpt16+1     ; compare counter
+        cmp readlen+1   ; with bytes read
         bne charge
-        lda cpt16+1
-        cmp readlen+1
+        lda cpt16
+        cmp readlen
         bne charge      ; loop if counter <> bytes read
 *
-        lda #<rdbuff    ; restore buffers adress
+        lda #<rdbuff    ; restore buffers addresses
         sta charge+1
         lda #>rdbuff
         sta charge+2
@@ -668,6 +681,8 @@ newpf   asc "Enter new prefix :"
 encryf  asc "Enter file name to encrypt :"
         hex 00
 quest1  asc "File exists. Overwrite (Y/N) ?"
+        hex 00
+fileok  asc "File encrypted !"
         hex 00
 *
 * * * * * * * * DATA  * * * * * * * * 
