@@ -373,7 +373,7 @@ lprint  lda (ptr1),y    ; read menu string
         pla
         cmp #$E0        ; #$E0 = start of lowercase inverse
         bge lower
-        and #$7F        ; to get inverse uppercase
+        and #$3F        ; to get inverse uppercase
         jmp out
 lower   and #$7F        ; to get inverse lowercase
         jmp out
