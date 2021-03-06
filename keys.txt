@@ -1,6 +1,0 @@
-bas : 8A
-haut : 8B
-gauche : 88
-droite : 95
-
-402C
