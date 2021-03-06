@@ -19,7 +19,6 @@ devnum    equ $BF30   ; last used device here, format : DSSS0000
 * ROM routines
 home      equ $FC58
 text      equ $FB2F
-col80off  equ $C00C
 cout      equ $FDF0
 vtab      equ $FC22
 getln     equ $FD6A
@@ -35,8 +34,12 @@ rdkey     equ $FD0C     ; wait for keypress
 * ROM switches
 ALTCHARSET0FF   equ $C00E 
 ALTCHARSET0N    equ $C00F
-kbd     equ $C000
-kbdstrb equ $C010
+kbd         equ $C000
+kbdstrb     equ $C010
+
+col80off    equ $C00C
+col80on     equ $C00D
+80col       equ $C01F 	 
 *
 * page 0
 ptr       equ $06
@@ -120,8 +123,11 @@ mainpc  getlen ]1       ; of the screen
         txa
         lsr             ; / 2
         sta tempo
+        get80
         lda #$14        ; = half line
-        sec
+        bcc pc40
+        lda #$28
+pc40    sec
         sbc tempo
         tax 
         lda #" "        ; fill with spaces
@@ -186,6 +192,15 @@ gotoXY  MAC             ; set cursor position on screen
         jsr vtab        ; vertical
         jsr clreol      ; clear end of line
         EOM
+*
+get80   MAC             ; 80 col : Carry = 1 
+        lda 80col       ; 40 col : Carry = 0
+        bmi do80
+        clc
+        jmp do40
+do80    sec
+do40    EOM    
+
         FIN
 *
 * * * * * * * * * *
@@ -197,7 +212,8 @@ main    nop
 * init
         jsr text
         jsr home
-        *sta col80off    ; 40 col.
+*sta col80off   ; 40 col.
+*sta col80on    ; 80 col.
         closef #$00     ; close all files
 *
         jsr GetPF
@@ -277,19 +293,25 @@ doloop  jsr dispmenu
 *  TITLE
 *
 title   gotoXY 0;1
-        ldx #$28        ; 40 char.
+        ldx #$28
+        get80
+        bcc dotitle
+        ldx #$50        ; 80 char.
 dotitle lda #"-"        ; --- line 1
 ]loop   jsr cout
         dex 
         bne ]loop
         gotoXY 0;2
         printc libtit   ; C r y p t o
-        gotoXY 0;3
-        lda #"-"        ; --- line 3
+        gotoXY 0;3      ; --- line 3       
         ldx #$28
-]loop2  jsr cout
+        get80
+        bcc line2
+        ldx #$50
+line2   lda #"-" 
+        jsr cout
         dex 
-        bne ]loop2 
+        bne line2 
         rts
 *
 * PREFIX
@@ -359,12 +381,19 @@ prn2    jsr printm      ; display menu item
 * * * * * * Print menu item * * * * * * 
 *
 printm   nop             
-        sta ALTCHARSET0N        ; to get lowercase inverse
+        sta ALTCHARSET0N   ; to get lowercase inverse
+        lda #$3F
+        sta invup+1     ; for 40 col. diplay 
+        get80
+        bcc prm
+        lda #$7F
+        sta invup+1     ; for 80 col. diplay         
+
 * charsets explained here : 
 * https://retrocomputing.stackexchange.com/questions/8652/
 * and here :
 * http://hackzapple.org/scripts_php/index.php?menu=14&mod=8517283d55e912b0b5ac842147e28904a4a751d3&page=7
-        ldy #$00
+prm     ldy #$00
 lprint  lda (ptr1),y    ; read menu string
         beq printend    ; ended by 0
         pha             ; save char. to display
@@ -373,7 +402,7 @@ lprint  lda (ptr1),y    ; read menu string
         pla
         cmp #$E0        ; #$E0 = start of lowercase inverse
         bge lower
-        and #$7F        ; to get inverse uppercase
+invup   and #$7F        ; to get inverse uppercase
         jmp out
 lower   and #$7F        ; to get inverse lowercase
         jmp out
